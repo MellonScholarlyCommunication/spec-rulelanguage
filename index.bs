@@ -1,16 +1,34 @@
 <pre class='metadata'>
-Title: Your Spec Title
-Shortname: your-spec
+Title: Rule language for decentralized business processes
+Shortname: rulelanguage
 Level: 1
 Status: LS
-URL: http://example.com/url-this-spec-will-live-at
-Editor: Your Name, Your Company http://example.com/your-company, your-email@example.com, http://example.com/your-personal-website
-Abstract: A short description of your spec, one or two sentences.
+URL: https://mellonscholarlycommunication.github.io/spec-rulelanguage
+Editor: Miel Vander Sande, meemoo - [Flemish Institute for Archiving](https://meemoo.be), miel.vandersande@meemoo.be
+Editor: Patrick Hochstenbach, Ghent University, patrick.hochstenbach@ugent.be
+Editor: Ruben Dedecker, Ghent University, ruben.dedecker@ugent.be
+Editor: Jeroen Werbrouck, Ghent University, Jeroen.Werbrouck@ugent.be
+Abstract: This document specifies the definition and application of a rule language to capture machine-readable business processes. 
+Markup Shorthands: markdown yes
 </pre>
+
+Set of documents {#set}
+=======================
+
+This document is one of the specifications produced by the **ResearcherPod** and **ErfgoedPod** project:
+
+1. [Overview](/spec-overview/) 
+2. [Orchestrator](/spec-orchestrator/) 
+3. [Data Pod](/spec-datapod/)
+4. [Rule language](/spec-rulelanguage/) (this document)
+5. [Artefact Lifecycle Event Log](/spec-eventlog/)
 
 Introduction {#intro}
 =====================
 
 Introduction here.
 
-Test build: d929bb9
+
+## Policy language {#policy-language}
+
+Alert-Act-Notify is a <dfn>policy language</dfn>.
