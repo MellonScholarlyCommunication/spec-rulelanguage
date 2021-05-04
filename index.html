@@ -1,7 +1,7 @@
 <!doctype html><html lang="en">
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-  <title>Your Spec Title</title>
+  <title>Rule language for decentralized business processes</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 <style data-fill-with="stylesheet">/******************************************************************************
  *                   Style sheet for the W3C specifications                   *
@@ -1222,8 +1222,8 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
-  <link href="http://example.com/url-this-spec-will-live-at" rel="canonical">
-  <meta content="0a9bb42824c228e22cf4b733d5b09a3111db7220" name="document-revision">
+  <link href="https://mellonscholarlycommunication.github.io/spec-rulelanguage" rel="canonical">
+  <meta content="91f2dc04ed55de8a707a67af05ea27af7a7225a9" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1374,16 +1374,19 @@ dfn > a.self-link::before      { content: "#"; }</style>
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"></p>
-   <h1 class="p-name no-ref" id="title">Your Spec Title</h1>
+   <h1 class="p-name no-ref" id="title">Rule language for decentralized business processes</h1>
    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Living Standard, <time class="dt-updated" datetime="2021-05-04">4 May 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
-     <dd><a class="u-url" href="http://example.com/url-this-spec-will-live-at">http://example.com/url-this-spec-will-live-at</a>
+     <dd><a class="u-url" href="https://mellonscholarlycommunication.github.io/spec-rulelanguage">https://mellonscholarlycommunication.github.io/spec-rulelanguage</a>
      <dt>Issue Tracking:
      <dd><a href="https://github.com/MellonScholarlyCommunication/spec-rulelanguage/issues/">GitHub</a>
-     <dt class="editor">Editor:
-     <dd class="editor p-author h-card vcard"><a class="p-name fn u-url url" href="http://example.com/your-personal-website">Your Name</a> (<a class="p-org org" href="http://example.com/your-company">Your Company</a>) <a class="u-email email" href="mailto:your-email@example.com">your-email@example.com</a>
+     <dt class="editor">Editors:
+     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:miel.vandersande@meemoo.be">Miel Vander Sande</a> (<span class="p-org org">meemoo - <a href="https://meemoo.be">Flemish Institute for Archiving</a></span>)
+     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:patrick.hochstenbach@ugent.be">Patrick Hochstenbach</a> (<span class="p-org org">Ghent University</span>)
+     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:ruben.dedecker@ugent.be">Ruben Dedecker</a> (<span class="p-org org">Ghent University</span>)
+     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:Jeroen.Werbrouck@ugent.be">Jeroen Werbrouck</a> (<span class="p-org org">Ghent University</span>)
     </dl>
    </div>
    <div data-fill-with="warning"></div>
@@ -1397,14 +1400,24 @@ Parts of this work may be from another specification document.  If so, those par
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
-   <p>A short description of your spec, one or two sentences.</p>
+   <p>This document specifies the definition and application of a rule language to capture machine-readable business processes.</p>
   </div>
   <div data-fill-with="at-risk"></div>
   <nav data-fill-with="table-of-contents" id="toc">
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
-    <li><a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
+    <li><a href="#set"><span class="secno">1</span> <span class="content">Set of documents</span></a>
+    <li>
+     <a href="#intro"><span class="secno">2</span> <span class="content">Introduction</span></a>
+     <ol class="toc">
+      <li><a href="#policy-language"><span class="secno">2.1</span> <span class="content">Policy language {#policy-language}</span></a>
+     </ol>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
+    <li>
+     <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
+     <ol class="toc">
+      <li><a href="#index-defined-here"><span class="secno"></span> <span class="content">Terms defined by this specification</span></a>
+     </ol>
     <li>
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
@@ -1413,9 +1426,24 @@ Parts of this work may be from another specification document.  If so, those par
    </ol>
   </nav>
   <main>
-   <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
+   <h2 class="heading settled" data-level="1" id="set"><span class="secno">1. </span><span class="content">Set of documents</span><a class="self-link" href="#set"></a></h2>
+   <p>This document is one of the specifications produced by the <strong>ResearcherPod</strong> and <strong>ErfgoedPod</strong> project:</p>
+   <ol>
+    <li data-md>
+     <p><a href="/spec-overview/">Overview</a></p>
+    <li data-md>
+     <p><a href="/spec-orchestrator/">Orchestrator</a></p>
+    <li data-md>
+     <p><a href="/spec-datapod/">Data Pod</a></p>
+    <li data-md>
+     <p><a href="/spec-rulelanguage/">Rule language</a> (this document)</p>
+    <li data-md>
+     <p><a href="/spec-eventlog/">Artefact Lifecycle Event Log</a></p>
+   </ol>
+   <h2 class="heading settled" data-level="2" id="intro"><span class="secno">2. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
    <p>Introduction here.</p>
-   <p>Test build: d929bb9</p>
+   <h3 class="heading settled" data-level="2.1" id="policy-language"><span class="secno">2.1. </span><span class="content">Policy language {#policy-language}</span><a class="self-link" href="#policy-language"></a></h3>
+   <p>Alert-Act-Notify is a <dfn data-dfn-type="dfn" data-noexport id="policy-language①">policy language<a class="self-link" href="#policy-language①"></a></dfn>.</p>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -1563,6 +1591,11 @@ Parts of this work may be from another specification document.  If so, those par
 
 })();
 </script>
+  <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
+  <ul class="index">
+   <li><a href="#policy-language①">policy language</a><span>, in §2.1</span>
+  </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
