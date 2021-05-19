@@ -238,7 +238,7 @@ An example:
   ?s ?p ?o .
 
 <b>then</b>
-  ?s my:match "second rule" .
+  ?s my:match "third rule" .
 </pre>
 </div>
 

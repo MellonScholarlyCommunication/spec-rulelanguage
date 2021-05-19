@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
   <link href="https://mellonscholarlycommunication.github.io/spec-rulelanguage" rel="canonical">
-  <meta content="6cc98f1a09fe3b64f322cbb3912d64c7df4f41d1" name="document-revision">
+  <meta content="a2c692a16e9dfd48ccf27702be39d35184c5953a" name="document-revision">
 <style>
 table {
   margin: 25px auto;
@@ -1591,8 +1591,8 @@ by the SPARQL <em>CONSTRUCT</em> statement:</p>
 create a graph independent from the input graph of the rule engine. Rules can’t influence each other.
 This mimics the style of rule processing in SHACL.</p>
    <p>An example:</p>
-   <div class="example" id="example-92ce5a2a">
-    <a class="self-link" href="#example-92ce5a2a"></a> 
+   <div class="example" id="example-3d4a0e63">
+    <a class="self-link" href="#example-3d4a0e63"></a> 
 <pre><b>rule</b> "First rule"
 
 <b>when</b>
@@ -1617,7 +1617,7 @@ This mimics the style of rule processing in SHACL.</p>
   ?s ?p ?o .
 
 <b>then</b>
-  ?s my:match "second rule" .
+  ?s my:match "third rule" .
 </pre>
    </div>
    <p>When these three rules are excuted against any input graph, it will result in two
