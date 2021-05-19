@@ -65,7 +65,7 @@ what [Actions](/spec-overview/#Action) to take in response to a [Trigger](/spec-
 such as incoming LDN notifications.
 
 To demonstrate the capabilities of the policies and possible use-cases it should cover, we introduce a
-pseudo rule language which acts as a guide to find reference implementations. Our pseudo language
+pseudo rule language which acts as a guide to find reference implementations. Our pseudolanguage
 combines features of Drools and SPARQL. Examples are given how some of the features
 of this language can be implemented in a concrete implementation.
 
@@ -94,7 +94,7 @@ An example of a simple rule:
 <b>rule</b> "Add to the EventLog"
 
 as:   &lt;https://www.w3.org/ns/activitystreams&gt;
-rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns\#&gt;
+rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 pol:  &lt;http://mellon.org/policy&gt;
 
 <b>when</b>
@@ -128,7 +128,7 @@ Given an LDN Notification:
 ```
 </div>
 
-the rule in Example 2 could start up an [Orchestrator](/spec-overview/#Orchestrator) process that adds the notification
+the rule in Example 2 could start up an [Orchestrator](/spec-overview/#Orchestrator) process that adds the Create event
 to the [EventLog](/spec-overview/#EventLog) and removes the `bcc` blind copies.
 
 ## Conditions
@@ -140,37 +140,45 @@ input data. This behavior matches SPARQL *WHERE* clause statements:
 <div class="example">
 <pre>
 <b>when</b>
-    ?s foaf:name "Herbert"  .      \# a property `foad:name` equals "Herbert" shoud exist
-    ?s ?p  42  .                   \# a property with value 42 should exist
-    ?s/as:object/nrr:reviews ?o  . \# a nested as:object/nrr:reviews should exist
+    ?s foaf:name "Herbert"  .      # a property `foad:name` equals "Herbert" shoud exist
+    ?s ?p  42  .                   # a property with value 42 should exist
+    ?s/as:object/nrr:reviews ?o  . # a nested as:object/nrr:reviews should exist
 </pre>
 </div>
 
-Functions in our pseudo language mimic the SPARQL *FILTER* statements:
+Functions in our pseudolanguage mimic the SPARQL *FILTER* statements:
+
+<div class="example">
+<pre>
+   (?s ?p ?o) -> <i>SomeFunction with (?s,?p,?o)</i>
+</pre>
+</div>
+
+Some examples:
 
 <div class="example">
 <pre>
 <b>when</b>
     # a resource has a class that is an as:Announce or as:Accept
-    ?s a (?class) -> ?class IN (as:Announce , as:Accept) .
+    (?s a ?class) -> ?class IN (as:Announce , as:Accept) .
 
     # a propety needs to have a case-insensitive name "yahoo"
-    ?s ?p (?o) -> regex(?o, "yahoo",i) .
+    (?s ?p ?o) -> regex(?o, "yahoo",i) .
 
     # the as:object needs to have an IRI value
-    ?s as:object (?o) -> isIRI(?o) .
+    (?s as:object ?o) -> isIRI(?o) .
 
     # the as:objects needs to have an IRI value or is a blankNode
-    ?s as:object (?o) -> isIRI(?o) OR isBlank(?o) .
+    (?s as:object ?o) -> isIRI(?o) OR isBlank(?o) .
 
     # the isLocalEventResouce should return a true value for the as:object value
-    ?s as:object (?o) -> isLocalEventResouce(?o)
+    (?s as:object ?o) -> isLocalEventResouce(?o)
 
     # the predicate and object should return a true value from myLocalFunction
-    ?s (?p ?o) -> myLocalFunction(?p, ?o) .
+    (?s ?p ?o) -> myLocalFunction(?p, ?o) .
 
     # combine with booleans
-    ?s as:object (?o) -> isIRI(?o) OR isBlank(?o) .
+    (?s as:object ?o) -> isIRI(?o) OR isBlank(?o) .
         OR ?s my:justATest true .
 
 </pre>
@@ -198,7 +206,49 @@ by the SPARQL *CONSTRUCT* statement:
 
 ## Result
 
-The result of a rule execution it the regeration of zero or more triples. That
-form a graph independent of the input graph for the rule engine. Every rule
-in the policy document creates an independent graph. Rules can't influence eachother.
+The result of a rule execution it the generation of zero or more triples. These generated triples
+create a graph independent from the input graph of the rule engine. Rules can't influence each other.
 This mimics the style of rule processing in SHACL.
+
+An example:
+
+<div class="example">
+<pre>
+<b>rule</b> "First rule"
+
+<b>when</b>
+   ?s ?p ?o .
+
+<b>then</b>
+   ?s my:match "first rule" .
+
+#---<br>
+<b>rule</b> "Second rule"
+
+<b>when</b>
+  ?s ?p ?o .
+
+<b>then</b>
+  ?s my:match "second rule" .
+
+#---<br>
+<b>rule</b> "Third rule"
+
+<b>when</b>
+  ?s ?p ?o .
+
+<b>then</b>
+  ?s my:match "second rule" .
+</pre>
+</div>
+
+When these three rules are excuted against any input graph, it will result in two
+graphs: the input graph and the result graph which contains:
+
+<div class="example">
+<pre>
+  my:input_id my:match "first rule" .
+  my:input_id my:match "second rule" .
+  my:input_id my:match "third rule" .
+</pre>
+</div>
