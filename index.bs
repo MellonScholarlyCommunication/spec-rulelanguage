@@ -93,9 +93,9 @@ An example of a simple rule:
 
 <b>rule</b> "Add to the EventLog"
 
-as:   &lt;https://www.w3.org/ns/activitystreams&gt;
+as:   &lt;https://www.w3.org/ns/activitystreams#&gt;
 rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-pol:  &lt;http://mellon.org/policy&gt;
+pol:  &lt;http://mellon.org/policy#&gt;
 
 <b>when</b>
 
@@ -186,7 +186,7 @@ Some examples:
 
 ## Actions
 
-Are a list of zero or more statements that mimic the triples that are generated
+Action are a list of zero or more statements that mimic the triples that are generated
 by the SPARQL *CONSTRUCT* statement:
 
 <div class="example">
@@ -201,6 +201,8 @@ by the SPARQL *CONSTRUCT* statement:
     ] .
 
     ?this pol:policy [ a pol:AppendToLog ] .
+
+    (?this ?_ ?_) -> SomeFunctionThatGeneratesTriplesFor(?this) .
 </pre>
 </div>
 
