@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
   <link href="https://mellonscholarlycommunication.github.io/spec-rulelanguage" rel="canonical">
-  <meta content="a2c692a16e9dfd48ccf27702be39d35184c5953a" name="document-revision">
+  <meta content="f40522b9d4bf705ca077cd36314a5a710d180250" name="document-revision">
 <style>
 table {
   margin: 25px auto;
@@ -1486,13 +1486,13 @@ of this language can be implemented in a concrete implementation.</p>
     <p>[<em>Action</em>] *</p>
    </div>
    <p>An example of a simple rule:</p>
-   <div class="example" id="example-b1e2a87c">
-    <a class="self-link" href="#example-b1e2a87c"></a> 
+   <div class="example" id="example-611f2382">
+    <a class="self-link" href="#example-611f2382"></a> 
 <pre><b>rule</b> "Add to the EventLog"
 
-as:   &lt;https://www.w3.org/ns/activitystreams>
+as:   &lt;https://www.w3.org/ns/activitystreams#>
 rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-pol:  &lt;http://mellon.org/policy>
+pol:  &lt;http://mellon.org/policy#>
 
 <b>when</b>
 
@@ -1570,10 +1570,10 @@ input data. This behavior matches SPARQL <em>WHERE</em> clause statements:</p>
 </pre>
    </div>
    <h3 class="heading settled" data-level="3.2" id="actions"><span class="secno">3.2. </span><span class="content">Actions</span><a class="self-link" href="#actions"></a></h3>
-   <p>Are a list of zero or more statements that mimic the triples that are generated
+   <p>Action are a list of zero or more statements that mimic the triples that are generated
 by the SPARQL <em>CONSTRUCT</em> statement:</p>
-   <div class="example" id="example-b7308144">
-    <a class="self-link" href="#example-b7308144"></a> 
+   <div class="example" id="example-82ed858c">
+    <a class="self-link" href="#example-82ed858c"></a> 
 <pre><b>then</b>
 
     ?this pol:policy [
@@ -1584,6 +1584,8 @@ by the SPARQL <em>CONSTRUCT</em> statement:</p>
     ] .
 
     ?this pol:policy [ a pol:AppendToLog ] .
+
+    (?this ?_ ?_) -> SomeFunctionThatGeneratesTriplesFor(?this) .
 </pre>
    </div>
    <h3 class="heading settled" data-level="3.3" id="result"><span class="secno">3.3. </span><span class="content">Result</span><a class="self-link" href="#result"></a></h3>
