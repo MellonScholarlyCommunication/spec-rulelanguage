@@ -8,7 +8,7 @@ Editor: Miel Vander Sande, meemoo - [Flemish Institute for Archiving](https://me
 Editor: Patrick Hochstenbach, Ghent University, patrick.hochstenbach@ugent.be
 Editor: Ruben Dedecker, Ghent University, ruben.dedecker@ugent.be
 Editor: Jeroen Werbrouck, Ghent University, Jeroen.Werbrouck@ugent.be
-Abstract: This document specifies the definition and application of a rule language to capture machine-readable business processes. 
+Abstract: This document specifies the definition and application of a rule language to capture machine-readable business processes.
 Markup Shorthands: markdown yes
 </pre>
 
@@ -45,8 +45,8 @@ Set of documents {#set}
 
 This document is one of the specifications produced by the **ResearcherPod** and **ErfgoedPod** project:
 
-1. [Overview](/spec-overview/) 
-2. [Orchestrator](/spec-orchestrator/) 
+1. [Overview](/spec-overview/)
+2. [Orchestrator](/spec-orchestrator/)
 3. [Data Pod](/spec-datapod/)
 4. [Rule language](/spec-rulelanguage/) (this document)
 5. [Artefact Lifecycle Event Log](/spec-eventlog/)
@@ -57,7 +57,148 @@ Introduction {#intro}
 
 Introduction here.
 
+Policy language
+=====================
 
-## Policy language {#policy-language}
+A Policy is set of machine-readable business rules that instruct the Orchestrator
+what [Actions](/spec-overview/#Action) to take in response to a [Trigger](/spec-overview/#Trigger)
+such as incoming LDN notifications.
 
-Alert-Act-Notify is a <dfn>policy language</dfn>.
+To demonstrate the capabilities of the policies and possible use-cases it should cover, we introduce a
+pseudo rule language which acts as a guide to find reference implementations. Our pseudo language
+combines features of Drools and SPARQL. Examples are given how some of the features
+of this language can be implemented in a concrete implementation.
+
+Each rule in a policy document has the structure of **rule**, **when**, **then** clauses:
+
+<div class="example">
+**rule** *Name*
+
+[*Prefix*]*
+
+**when**
+
+    [*Condition*] *
+
+**then**
+
+    [*Action*] *
+</div>
+
+An example of a simple rule:
+
+<div class="example">
+
+<pre>
+
+<b>rule</b> "Add to the EventLog"
+
+as:   &lt;https://www.w3.org/ns/activitystreams&gt;
+rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns\#&gt;
+pol:  &lt;http://mellon.org/policy&gt;
+
+<b>when</b>
+
+  ?s a as:Announce . <i>OR</i>
+    ?s a as:Create .
+
+<b>then</b>
+
+  ?s pol:policy [  a pol:AppendToLog  ] .
+  ?s pol:policy [  a pol:RemoveBlindCopies   ].
+</pre>
+
+</div>
+
+Given an LDN Notification:
+
+<div class="example">
+```
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "" ,
+  "type": "Create" ,
+  "object": "http://miel.data.pod/publications/mellon.pdf",
+  "target": "http://ruben.data.pod/inbox",
+  "bcc": [
+   "http://patrick.data.pod/inbox",
+   "http://jeroen.data.pod/inbox"
+   ]
+}
+```
+</div>
+
+the rule in Example 2 could start up an [Orchestrator](/spec-overview/#Orchestrator) process that adds the notification
+to the [EventLog](/spec-overview/#EventLog) and removes the `bcc` blind copies.
+
+## Conditions
+
+Conditions in the **when** clause are interpreted as boolean statements. When the
+condition is in the format of a triple, it means the *existence* of the triple in the
+input data. This behavior matches SPARQL *WHERE* clause statements:
+
+<div class="example">
+<pre>
+<b>when</b>
+    ?s foaf:name "Herbert"  .      \# a property `foad:name` equals "Herbert" shoud exist
+    ?s ?p  42  .                   \# a property with value 42 should exist
+    ?s/as:object/nrr:reviews ?o  . \# a nested as:object/nrr:reviews should exist
+</pre>
+</div>
+
+Functions in our pseudo language mimic the SPARQL *FILTER* statements:
+
+<div class="example">
+<pre>
+<b>when</b>
+    # a resource has a class that is an as:Announce or as:Accept
+    ?s a (?class) -> ?class IN (as:Announce , as:Accept) .
+
+    # a propety needs to have a case-insensitive name "yahoo"
+    ?s ?p (?o) -> regex(?o, "yahoo",i) .
+
+    # the as:object needs to have an IRI value
+    ?s as:object (?o) -> isIRI(?o) .
+
+    # the as:objects needs to have an IRI value or is a blankNode
+    ?s as:object (?o) -> isIRI(?o) OR isBlank(?o) .
+
+    # the isLocalEventResouce should return a true value for the as:object value
+    ?s as:object (?o) -> isLocalEventResouce(?o)
+
+    # the predicate and object should return a true value from myLocalFunction
+    ?s (?p ?o) -> myLocalFunction(?p, ?o) .
+
+    # combine with booleans
+    ?s as:object (?o) -> isIRI(?o) OR isBlank(?o) .
+        OR ?s my:justATest true .
+
+</pre>
+</div>
+
+## Actions
+
+Are a list of zero or more statements that mimic the triples that are generated
+by the SPARQL *CONSTRUCT* statement:
+
+<div class="example">
+<pre>
+<b>then</b>
+
+    ?this pol:policy [
+      a pol:SendMessage ;
+      as:to "http://my.institute.org/inbox" ;
+      as:from :Me ;
+      as:message "Hello world" .
+    ] .
+
+    ?this pol:policy [ a pol:AppendToLog ] .
+</pre>
+</div>
+
+## Result
+
+The result of a rule execution it the regeration of zero or more triples. That
+form a graph independent of the input graph for the rule engine. Every rule
+in the policy document creates an independent graph. Rules can't influence eachother.
+This mimics the style of rule processing in SHACL.

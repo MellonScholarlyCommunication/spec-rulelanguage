@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
   <link href="https://mellonscholarlycommunication.github.io/spec-rulelanguage" rel="canonical">
-  <meta content="64780d3bc31c3698e1a2ea2c64e11202e465bd8f" name="document-revision">
+  <meta content="6890f8c995d6922229f0d204af72e497c054d9be" name="document-revision">
 <style>
 table {
   margin: 25px auto;
@@ -1402,7 +1402,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Rule language for decentralized business processes</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Living Standard, <time class="dt-updated" datetime="2021-05-18">18 May 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Living Standard, <time class="dt-updated" datetime="2021-05-19">19 May 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1419,7 +1419,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 18 May 2021,
+In addition, as of 19 May 2021,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1434,17 +1434,15 @@ Parts of this work may be from another specification document.  If so, those par
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
     <li><a href="#set"><span class="secno">1</span> <span class="content">Set of documents</span></a>
+    <li><a href="#intro"><span class="secno">2</span> <span class="content">Introduction</span></a>
     <li>
-     <a href="#intro"><span class="secno">2</span> <span class="content">Introduction</span></a>
+     <a href="#policy-language"><span class="secno">3</span> <span class="content">Policy language</span></a>
      <ol class="toc">
-      <li><a href="#policy-language"><span class="secno">2.1</span> <span class="content">Policy language {#policy-language}</span></a>
+      <li><a href="#conditions"><span class="secno">3.1</span> <span class="content">Conditions</span></a>
+      <li><a href="#actions"><span class="secno">3.2</span> <span class="content">Actions</span></a>
+      <li><a href="#result"><span class="secno">3.3</span> <span class="content">Result</span></a>
      </ol>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
-    <li>
-     <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
-     <ol class="toc">
-      <li><a href="#index-defined-here"><span class="secno"></span> <span class="content">Terms defined by this specification</span></a>
-     </ol>
     <li>
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
@@ -1471,8 +1469,122 @@ Parts of this work may be from another specification document.  If so, those par
    </ol>
    <h2 class="heading settled" data-level="2" id="intro"><span class="secno">2. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
    <p>Introduction here.</p>
-   <h3 class="heading settled" data-level="2.1" id="policy-language"><span class="secno">2.1. </span><span class="content">Policy language {#policy-language}</span><a class="self-link" href="#policy-language"></a></h3>
-   <p>Alert-Act-Notify is a <dfn data-dfn-type="dfn" data-noexport id="policy-language①">policy language<a class="self-link" href="#policy-language①"></a></dfn>.</p>
+   <h2 class="heading settled" data-level="3" id="policy-language"><span class="secno">3. </span><span class="content">Policy language</span><a class="self-link" href="#policy-language"></a></h2>
+   <p>A Policy is set of machine-readable business rules that instruct the Orchestrator
+what <a href="/spec-overview/#Action">Actions</a> to take in response to a <a href="/spec-overview/#Trigger">Trigger</a> such as incoming LDN notifications.</p>
+   <p>To demonstrate the capabilities of the policies and possible use-cases it should cover, we introduce a
+pseudo rule language which acts as a guide to find reference implementations. Our pseudo language
+combines features of Drools and SPARQL. Examples are given how some of the features
+of this language can be implemented in a concrete implementation.</p>
+   <p>Each rule in a policy document has the structure of <strong>rule</strong>, <strong>when</strong>, <strong>then</strong> clauses:</p>
+   <div class="example" id="example-81ac911c">
+    <a class="self-link" href="#example-81ac911c"></a> <strong>rule</strong> <em>Name</em> 
+    <p>[<em>Prefix</em>]*</p>
+    <p><strong>when</strong></p>
+    <p>[<em>Condition</em>] *</p>
+    <p><strong>then</strong></p>
+    <p>[<em>Action</em>] *</p>
+   </div>
+   <p>An example of a simple rule:</p>
+   <div class="example" id="example-491510bb">
+    <a class="self-link" href="#example-491510bb"></a> 
+<pre><b>rule</b> "Add to the EventLog"
+
+as:   &lt;https://www.w3.org/ns/activitystreams>
+rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns\#>
+pol:  &lt;http://mellon.org/policy>
+
+<b>when</b>
+
+  ?s a as:Announce . <i>OR</i>
+    ?s a as:Create .
+
+<b>then</b>
+
+  ?s pol:policy [  a pol:AppendToLog  ] .
+  ?s pol:policy [  a pol:RemoveBlindCopies   ].
+</pre>
+   </div>
+   <p>Given an LDN Notification:</p>
+   <div class="example" id="example-d1d6c268">
+    <a class="self-link" href="#example-d1d6c268"></a> 
+<pre>{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "" ,
+  "type": "Create" ,
+  "object": "http://miel.data.pod/publications/mellon.pdf",
+  "target": "http://ruben.data.pod/inbox",
+  "bcc": [
+   "http://patrick.data.pod/inbox",
+   "http://jeroen.data.pod/inbox"
+   ]
+}
+</pre>
+   </div>
+   <p>the rule in Example 2 could start up an <a href="/spec-overview/#Orchestrator">Orchestrator</a> process that adds the notification
+to the <a href="/spec-overview/#EventLog">EventLog</a> and removes the <code>bcc</code> blind copies.</p>
+   <h3 class="heading settled" data-level="3.1" id="conditions"><span class="secno">3.1. </span><span class="content">Conditions</span><a class="self-link" href="#conditions"></a></h3>
+   <p>Conditions in the <strong>when</strong> clause are interpreted as boolean statements. When the
+condition is in the format of a triple, it means the <em>existence</em> of the triple in the
+input data. This behavior matches SPARQL <em>WHERE</em> clause statements:</p>
+   <div class="example" id="example-3b26a484">
+    <a class="self-link" href="#example-3b26a484"></a> 
+<pre><b>when</b>
+    ?s foaf:name "Herbert"  .      \# a property <code>foad:name</code> equals "Herbert" shoud exist
+    ?s ?p  42  .                   \# a property with value 42 should exist
+    ?s/as:object/nrr:reviews ?o  . \# a nested as:object/nrr:reviews should exist
+</pre>
+   </div>
+   <p>Functions in our pseudo language mimic the SPARQL <em>FILTER</em> statements:</p>
+   <div class="example" id="example-2059f778">
+    <a class="self-link" href="#example-2059f778"></a> 
+<pre><b>when</b>
+    # a resource has a class that is an as:Announce or as:Accept
+    ?s a (?class) -> ?class IN (as:Announce , as:Accept) .
+
+    # a propety needs to have a case-insensitive name "yahoo"
+    ?s ?p (?o) -> regex(?o, "yahoo",i) .
+
+    # the as:object needs to have an IRI value
+    ?s as:object (?o) -> isIRI(?o) .
+
+    # the as:objects needs to have an IRI value or is a blankNode
+    ?s as:object (?o) -> isIRI(?o) OR isBlank(?o) .
+
+    # the isLocalEventResouce should return a true value for the as:object value
+    ?s as:object (?o) -> isLocalEventResouce(?o)
+
+    # the predicate and object should return a true value from myLocalFunction
+    ?s (?p ?o) -> myLocalFunction(?p, ?o) .
+
+    # combine with booleans
+    ?s as:object (?o) -> isIRI(?o) OR isBlank(?o) .
+        OR ?s my:justATest true .
+
+</pre>
+   </div>
+   <h3 class="heading settled" data-level="3.2" id="actions"><span class="secno">3.2. </span><span class="content">Actions</span><a class="self-link" href="#actions"></a></h3>
+   <p>Are a list of zero or more statements that mimic the triples that are generated
+by the SPARQL <em>CONSTRUCT</em> statement:</p>
+   <div class="example" id="example-b7308144">
+    <a class="self-link" href="#example-b7308144"></a> 
+<pre><b>then</b>
+
+    ?this pol:policy [
+      a pol:SendMessage ;
+      as:to "http://my.institute.org/inbox" ;
+      as:from :Me ;
+      as:message "Hello world" .
+    ] .
+
+    ?this pol:policy [ a pol:AppendToLog ] .
+</pre>
+   </div>
+   <h3 class="heading settled" data-level="3.3" id="result"><span class="secno">3.3. </span><span class="content">Result</span><a class="self-link" href="#result"></a></h3>
+   <p>The result of a rule execution it the regeration of zero or more triples. That
+form a graph independent of the input graph for the rule engine. Every rule
+in the policy document creates an independent graph. Rules can’t influence eachother.
+This mimics the style of rule processing in SHACL.</p>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -1620,11 +1732,6 @@ Parts of this work may be from another specification document.  If so, those par
 
 })();
 </script>
-  <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
-  <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
-  <ul class="index">
-   <li><a href="#policy-language①">policy language</a><span>, in §2.1</span>
-  </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>

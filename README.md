@@ -25,3 +25,5 @@ Alternatively, to update the HTML every time you make changes to [the source doc
 ```bash
 make watch
 ```
+
+Or view the [rendered version](https://mellonscholarlycommunication.github.io/spec-rulelanguage/).
