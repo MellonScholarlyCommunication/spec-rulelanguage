@@ -62,7 +62,7 @@ Policy language
 
 A Policy is set of machine-readable business rules that instruct the Orchestrator
 what [Actions](/spec-overview/#Action) to take in response to a [Trigger](/spec-overview/#Trigger)
-such as incoming [LDN](#insert-link) notifications.
+such as incoming [LDN](https://www.w3.org/TR/ldn/) notifications.
 
 To demonstrate the capabilities of the policies and possible use-cases it should cover, we introduce a
 pseudo rule language which acts as a guide to find reference implementations. Our pseudo language
@@ -128,8 +128,8 @@ Given an LDN Notification:
 ```
 </div>
 
-the rule in Example 2 could start up an [Orchestrator](#insert-link) process that adds the notification
-to the [EventLog](#insert-link) and removes the `bcc` blind copies.
+the rule in Example 2 could start up an [Orchestrator](/spec-overview/#Orchestrator) process that adds the notification
+to the [EventLog](/spec-overview/#EventLog) and removes the `bcc` blind copies.
 
 ## Conditions
 
@@ -201,4 +201,4 @@ by the SPARQL *CONSTRUCT* statement:
 The result of a rule execution it the regeration of zero or more triples. That
 form a graph independent of the input graph for the rule engine. Every rule
 in the policy document creates an independent graph. Rules can't influence eachother.
-This mimics the style of rule processing in [SHACL](#insert-link).
+This mimics the style of rule processing in [SHACL](https://www.w3.org/TR/shacl/).
