@@ -254,3 +254,49 @@ graphs: the input graph and the result graph which contains:
   my:input_id my:match "third rule" .
 </pre>
 </div>
+
+
+## Triggers
+
+Note: this part was moved from the oorchestrator spec in case it's useful.
+
+Example of a trigger using resource state changes:
+```
+{
+  "@context": "https://www.example.org/ns/policy",
+  "summary": "Linked Data Notification Trigger",
+  "type": "StateTrigger",
+  "resource": "https://mypod.org/resources/,
+  "state": ["Create", "Update"]
+}
+```
+
+
+Example of a datetime trigger:
+```
+{
+  "@context": "https://www.example.org/ns/policy",
+  "summary": "Linked Data Notification Trigger",
+  "type": "DateTimeTrigger",
+  "dateTime":[
+    {
+      "@value": "2021-12-12T20:20:20.201Z",
+      "@type": xsd:dateTime
+    },
+    {
+      "@value": "2021-12-12T21:21:21.211Z",
+      "@type": xsd:dateTime
+    }]
+}
+```
+Example of a time interval trigger:
+```
+{
+  "@context": "https://www.example.org/ns/policy",
+  "summary": "Linked Data Notification Trigger",
+  "type": "StateTrigger",
+  "resource": "https://mypod.org/resources/
+  "state": ["Create", "Update"]
+}
+```
+</pre>
