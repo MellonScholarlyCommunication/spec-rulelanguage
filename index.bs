@@ -249,28 +249,106 @@ graphs: the input graph and the result graph which contains:
 
 <div class="example">
 <pre>
+  my:input_id my:match "third rule" .
   my:input_id my:match "first rule" .
   my:input_id my:match "second rule" .
-  my:input_id my:match "third rule" .
 </pre>
 </div>
 
+Note: the order in which the rules are executed is not specified.
 
-## Triggers
+Examples
+=====================
 
-Note: this part was moved from the oorchestrator spec in case it's useful.
+## Linked Data Notifications
 
-Example of a trigger using resource state changes:
-```
+We demonstrate here how a policy can be created that act on incoming Linked Data Notifications.
+
+### Add an Offer to the EventLog
+
+This policy rule will request to add an *AS2 Offer* to the **EventLog**:
+
+<div class="example">
+<pre>
+<b>rule</b> "Add offer to the EventLog"
+
+as:   &lt;https://www.w3.org/ns/activitystreams#&gt;
+rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+pol:  &lt;http://mellon.org/policy#&gt;
+
+<b>when</b>
+
+  ?s a as:Offer
+
+<b>then</b>
+  ?s pol:policy pol:AppendToLog
+</pre>
+</div>
+
+Given the following JSON-LD input:
+
+<div class="example">
+```(JSON)
 {
-  "@context": "https://www.example.org/ns/policy",
-  "summary": "Linked Data Notification Trigger",
-  "type": "StateTrigger",
-  "resource": "https://mypod.org/resources/,
-  "state": ["Create", "Update"]
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    "http://purl.org/coar/notify"
+  ],
+  "actor": {
+    "id": "https://orcid.org/0000-0002-1825-0097",
+    "ldp:inbox": "https://josiahcarberry.com/ldn/inbox",
+    "name": "Josiah Carberry",
+    "type": [
+      "Person"
+    ]
+  },
+  "id": "urn:uuid:0370c0fb-bb78-4a9b-87f5-bed307a509dd",
+  "object": {
+    "id": "https://origin-system.org/resources/0021",
+    "ietf:cite-as": "https://doi.org/10.4598/12123487",
+    "type": [
+      "Document"
+    ]
+  },
+  "origin": {
+    "id": "https://origin-system.org",
+    "ldp:inbox": "https://origin-system.org/inbox/",
+    "type": [
+      "Service"
+    ]
+  },
+  "target": {
+    "id": "https://target-system.org",
+    "ldp:inbox": "https://target-system.org/inbox/",
+    "type": [
+      "Service"
+    ]
+  },
+  "type": [
+    "Offer"
+  ]
 }
 ```
+</div>
 
+The policy rules above will result in a new graph with these triples:
+
+<div class="example">
+```
+@prefix as:   <https://www.w3.org/ns/activitystreams#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix pol:  <http://mellon.org/policy#> .
+
+<urn:uuid:0370c0fb-bb78-4a9b-87f5-bed307a509dd> pol:policy pol:AppendToLog .
+```
+</div>
+
+A policy language execution environment, such as the Orchestrator, could use the
+new generated graph to write a copy of the notification in some way to the
+Artefact Lifecycle Event Log. The `pol:AppendToLog` is interpreted in this way
+as some agreed procedure call that need to be executed on the JSON-LD input.
+
+## Triggers
 
 Example of a datetime trigger:
 ```
