@@ -155,7 +155,7 @@ input data. This behavior matches SPARQL *WHERE* clause statements:
 <b>when</b>
     ?s foaf:name "Herbert"  .      # a property `foad:name` equals "Herbert" shoud exist
     ?s ?p  42  .                   # a property with value 42 should exist
-    ?s/as:object/nrr:reviews ?o  . # a nested as:object/nrr:reviews should exist
+    ?s as:object/nrr:reviews ?o  . # a nested as:object/nrr:reviews should exist
 </pre>
 </div>
 
@@ -505,4 +505,68 @@ pol:  &lt;https://www.example.org/ns/policy#&gt;
   ] .
 
 </pre>
+</div>
+
+Implementation Hints
+=====================
+
+## SPARQL
+
+Example 2 - Add to the EventLog
+
+<div class="example">
+```
+
+PREFIX as: <https://www.w3.org/ns/activitystreams#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol:  <https://www.example.org/ns/policy#>
+CONSTRUCT {
+  ?this pol:policy [  a pol:AppendToLog  ] .
+  ?this pol:policy [  a pol:RemoveBlindCopies   ] .
+}
+WHERE {
+  ?this a ?type .
+  FILTER ( ?type IN (as:Announce , as:Create) )
+}
+```
+</div>
+
+Example 5 - Conditions
+
+<div class="example">
+```
+PREFIX as: <https://www.w3.org/ns/activitystreams#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol:  <https://www.example.org/ns/policy#>
+CONSTRUCT {
+  ...
+}
+WHERE {
+  ?this foaf:name "Herbert"  .
+  ?this ?p  42  .
+  ?this as:object/nrr:reviews ?o .
+}
+```
+</div>
+
+Example 7 - Function Examples
+
+<div class="example">
+```
+PREFIX as: <https://www.w3.org/ns/activitystreams#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol:  <https://www.example.org/ns/policy#>
+CONSTRUCT {
+  ...
+}
+WHERE {
+  ?this a ?class .
+  ?this foo:name ?foo_val .
+  ?this as:object ?object_val .
+
+  FILTER ( ?class IN (as:Announce , as:Accept)  )
+  FILTER ( regex(?foo_val, "yahoo", i) )
+  FILTER ( isIRI(?object_val) || isBlank(?object_val) )
+}
+```
 </div>
