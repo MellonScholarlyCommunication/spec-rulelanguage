@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
   <link href="https://mellonscholarlycommunication.github.io/spec-rulelanguage" rel="canonical">
-  <meta content="6615fff297a00f9c410593ad0ddc329768795915" name="document-revision">
+  <meta content="5cf3bf9690f251508b976cbfe717b94ad8b28035" name="document-revision">
 <style>
 table {
   margin: 25px auto;
@@ -1410,8 +1410,8 @@ dfn > a.self-link::before      { content: "#"; }</style>
      <dt>Issue Tracking:
      <dd><a href="https://github.com/MellonScholarlyCommunication/spec-rulelanguage/issues/">GitHub</a>
      <dt class="editor">Editors:
-     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:miel.vandersande@meemoo.be">Miel Vander Sande</a> (<span class="p-org org">meemoo - <a href="https://meemoo.be">Flemish Institute for Archiving</a></span>)
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:patrick.hochstenbach@ugent.be">Patrick Hochstenbach</a> (<span class="p-org org">Ghent University</span>)
+     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:miel.vandersande@meemoo.be">Miel Vander Sande</a> (<span class="p-org org">meemoo - <a href="https://meemoo.be">Flemish Institute for Archiving</a></span>)
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:ruben.dedecker@ugent.be">Ruben Dedecker</a> (<span class="p-org org">Ghent University</span>)
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:Jeroen.Werbrouck@ugent.be">Jeroen Werbrouck</a> (<span class="p-org org">Ghent University</span>)
     </dl>
@@ -1445,12 +1445,13 @@ Parts of this work may be from another specification document.  If so, those par
     <li>
      <a href="#examples"><span class="secno">4</span> <span class="content">Examples</span></a>
      <ol class="toc">
+      <li><a href="#receving-linked-data-notifications"><span class="secno">4.1</span> <span class="content">Receving Linked Data Notifications</span></a>
       <li>
-       <a href="#linked-data-notifications"><span class="secno">4.1</span> <span class="content">Linked Data Notifications</span></a>
+       <a href="#other-triggers"><span class="secno">4.2</span> <span class="content">Other Triggers</span></a>
        <ol class="toc">
-        <li><a href="#add-an-offer-to-the-eventlog"><span class="secno">4.1.1</span> <span class="content">Add an Offer to the EventLog</span></a>
+        <li><a href="#observing-resource-state-changes"><span class="secno">4.2.1</span> <span class="content">Observing resource state changes</span></a>
+        <li><a href="#scheduled-trigger"><span class="secno">4.2.2</span> <span class="content">Scheduled trigger</span></a>
        </ol>
-      <li><a href="#triggers"><span class="secno">4.2</span> <span class="content">Triggers</span></a>
      </ol>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
@@ -1496,13 +1497,13 @@ of this language can be implemented in a concrete implementation.</p>
     <p>[<em>Action</em>] *</p>
    </div>
    <p>An example of a simple rule:</p>
-   <div class="example" id="example-611f2382">
-    <a class="self-link" href="#example-611f2382"></a> 
+   <div class="example" id="example-911ef6ee">
+    <a class="self-link" href="#example-911ef6ee"></a> 
 <pre><b>rule</b> "Add to the EventLog"
 
 as:   &lt;https://www.w3.org/ns/activitystreams#>
 rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-pol:  &lt;http://mellon.org/policy#>
+pol:  &lt;https://www.example.org/ns/policy#>
 
 <b>when</b>
 
@@ -1531,7 +1532,18 @@ pol:  &lt;http://mellon.org/policy#>
 }
 </pre>
    </div>
-   <p>the rule in Example 2 could start up an <a href="/spec-overview/#Orchestrator">Orchestrator</a> process that adds the Create event
+   <p>the rules will result in an output:</p>
+   <div class="example" id="example-ad513f54">
+    <a class="self-link" href="#example-ad513f54"></a> 
+<pre>@prefix as:   &lt;https://www.w3.org/ns/activitystreams#> .
+@prefix rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix pol:  &lt;https://www.example.org/ns/policy#> .
+
+&lt;http://this.document> pol:policy [  a pol:AppendToLog  ] .
+&lt;http://this.document> pol:policy [  a pol:RemoveBlindCopies   ].
+</pre>
+   </div>
+   <p>These resulrs could start up an <a href="/spec-overview/#Orchestrator">Orchestrator</a> process that adds the Create event
 to the <a href="/spec-overview/#EventLog">EventLog</a> and removes the <code>bcc</code> blind copies.</p>
    <h3 class="heading settled" data-level="3.1" id="conditions"><span class="secno">3.1. </span><span class="content">Conditions</span><a class="self-link" href="#conditions"></a></h3>
    <p>Conditions in the <strong>when</strong> clause are interpreted as boolean statements. When the
@@ -1643,24 +1655,23 @@ my:input_id my:match "second rule" .
    </div>
    <p class="note" role="note"><span>Note:</span> the order in which the rules are executed is not specified.</p>
    <h2 class="heading settled" data-level="4" id="examples"><span class="secno">4. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h2>
-   <h3 class="heading settled" data-level="4.1" id="linked-data-notifications"><span class="secno">4.1. </span><span class="content">Linked Data Notifications</span><a class="self-link" href="#linked-data-notifications"></a></h3>
-   <p>We demonstrate here how a policy can be created that act on incoming Linked Data Notifications.</p>
-   <h4 class="heading settled" data-level="4.1.1" id="add-an-offer-to-the-eventlog"><span class="secno">4.1.1. </span><span class="content">Add an Offer to the EventLog</span><a class="self-link" href="#add-an-offer-to-the-eventlog"></a></h4>
+   <h3 class="heading settled" data-level="4.1" id="receving-linked-data-notifications"><span class="secno">4.1. </span><span class="content">Receving Linked Data Notifications</span><a class="self-link" href="#receving-linked-data-notifications"></a></h3>
+   <p>We demonstrate here how a policy can be created that acts on incoming Linked Data Notifications.</p>
    <p>This policy rule will request to add an <em>AS2 Offer</em> to the <strong>EventLog</strong>:</p>
-   <div class="example" id="example-825fb871">
-    <a class="self-link" href="#example-825fb871"></a> 
+   <div class="example" id="example-11cc69b7">
+    <a class="self-link" href="#example-11cc69b7"></a> 
 <pre><b>rule</b> "Add offer to the EventLog"
 
 as:   &lt;https://www.w3.org/ns/activitystreams#>
 rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-pol:  &lt;http://mellon.org/policy#>
+pol:  &lt;https://www.example.org/ns/policy#>
 
 <b>when</b>
 
-  ?s a as:Offer
+  ?s a as:Offer .
 
 <b>then</b>
-  ?s pol:policy pol:AppendToLog
+  ?s pol:policy [ a pol:AppendToLog ] .
 </pre>
    </div>
    <p>Given the following JSON-LD input:</p>
@@ -1708,45 +1719,144 @@ pol:  &lt;http://mellon.org/policy#>
 </pre>
    </div>
    <p>The policy rules above will result in a new graph with these triples:</p>
-   <div class="example" id="example-ec7b4c95">
-    <a class="self-link" href="#example-ec7b4c95"></a> 
+   <div class="example" id="example-c10ad906">
+    <a class="self-link" href="#example-c10ad906"></a> 
 <pre>@prefix as:   &lt;https://www.w3.org/ns/activitystreams#> .
 @prefix rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix pol:  &lt;http://mellon.org/policy#> .
+@prefix pol:  &lt;https://www.example.org/ns/policy#> .
 
-&lt;urn:uuid:0370c0fb-bb78-4a9b-87f5-bed307a509dd> pol:policy pol:AppendToLog .
+&lt;urn:uuid:0370c0fb-bb78-4a9b-87f5-bed307a509dd> pol:policy [ a pol:AppendToLog ] .
 </pre>
    </div>
-   <p>A policy language execution environment, such as the Orchestrator, could use the
+   <p>A policy language interpeter, such as the Orchestrator, could use the
 new generated graph to write a copy of the notification in some way to the
 Artefact Lifecycle Event Log. The <code>pol:AppendToLog</code> is interpreted in this way
-as some agreed procedure call that need to be executed on the JSON-LD input.</p>
-   <h3 class="heading settled" data-level="4.2" id="triggers"><span class="secno">4.2. </span><span class="content">Triggers</span><a class="self-link" href="#triggers"></a></h3>
-   <p>Example of a datetime trigger:</p>
+as some agreed procedure call that needs to be executed on the JSON-LD input.</p>
+   <h3 class="heading settled" data-level="4.2" id="other-triggers"><span class="secno">4.2. </span><span class="content">Other Triggers</span><a class="self-link" href="#other-triggers"></a></h3>
+   <p>AS2 Notifications can not only be generated by external actors but
+also internal local processes. For instance, at periodic intervals the
+Orchestrator can monitor an (external) resource. When the state of a resource
+changes, then it can trigger the creation of a AS2 notification. The policy
+language rules can act on these notifications and decide what to do with
+this information.</p>
+   <p>How these internal trigger notifications get generated is outside the scope
+of this specification. We assume that the activation of a trigger results in
+the generation of an AS2 notification.</p>
+   <h4 class="heading settled" data-level="4.2.1" id="observing-resource-state-changes"><span class="secno">4.2.1. </span><span class="content">Observing resource state changes</span><a class="self-link" href="#observing-resource-state-changes"></a></h4>
+   <p>This trigger is generated when a monitored (external) resource has a state change.</p>
+   <p>In the example below a new resource <code>http://my.instutution.org/people/124/publications/a03218h</code> was created by <code>http://my.instutution.org/people/124</code>. The Orchestrator is triggered
+— by itself or an external trusted source — of this fact using the AS2 notification:</p>
+   <div class="example" id="example-c30ba0f6">
+    <a class="self-link" href="#example-c30ba0f6"></a> 
 <pre>{
-  "@context": "https://www.example.org/ns/policy",
-  "summary": "Linked Data Notification Trigger",
-  "type": "DateTimeTrigger",
-  "dateTime":[
-    {
-      "@value": "2021-12-12T20:20:20.201Z",
-      "@type": xsd:dateTime
-    },
-    {
-      "@value": "2021-12-12T21:21:21.211Z",
-      "@type": xsd:dateTime
-    }]
+  "@context": [
+      "https://www.w3.org/ns/activitystreams",
+      "https://www.example.org/ns/policy"
+  ] ,
+  "type": [ "Create" , "pol:StateTrigger" ] ,
+  "actor": "http://my.instutution.org/people/124" ,
+  "object": "http://my.instutution.org/people/124/publications/a03218h" ,
+  "summary": "A new publication was created by person 1234"
 }
 </pre>
-   Example of a time interval trigger: 
-<pre>{
-  "@context": "https://www.example.org/ns/policy",
-  "summary": "Linked Data Notification Trigger",
-  "type": "StateTrigger",
-  "resource": "https://mypod.org/resources/
-  "state": ["Create", "Update"]
+   </div>
+   <p>A policy rule to send emails when these types of StateTrigger occur can be defined as follows:</p>
+   <div class="example" id="example-20f00005">
+    <a class="self-link" href="#example-20f00005"></a> 
+<pre><b>rule</b> "Add State Trigger definitions"
+
+as:   &lt;https://www.w3.org/ns/activitystreams#>
+rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+pol:  &lt;https://www.example.org/ns/policy#>
+email: &lt;https://local.org/ns/email#>
+
+<b>when</b>
+
+  ?s a pol:StateTrigger . AND
+    ?s a as:Create .
+
+<b>then</b>
+  ?s pol:policy [
+    a email:SendEmail ;
+    email:from "my@myself.and.i" ;
+    email:to "you@yourself.edu" ;
+    email:subject "A new resource was created!"
+  ] .
+
+</pre>
+   </div>
+   <p>The execution of the policy rules will result in a new graph with these triples:</p>
+   <div class="example" id="example-839c5f3a">
+    <a class="self-link" href="#example-839c5f3a"></a> 
+<pre>@prefix as:   &lt;https://www.w3.org/ns/activitystreams#> .
+@prefix rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix pol:  &lt;https://www.example.org/ns/policy#> .
+@prefix email: &lt;https://local.org/ns/email#> .
+
+_:b0 pol:policy [
+  a email:SendEmail ;
+  email:from "my@myself.and.i" ;
+  email:to "you@yourself.edu" ;
+  email:subject "A new resource was created!"
+] .
+</pre>
+   </div>
+   <p>Some <code>SendEmail</code> process could use this input with the AS2 notification above to
+send an email to <code>you@yourself.edu</code> about the new resource.</p>
+   <div class="note" role="note"> We assume there are some reasonable security measures in place, such as digital
+signatures, to limit the applications that are allowed to send these type of
+trigger events to the policy rule engine. </div>
+   <h4 class="heading settled" data-level="4.2.2" id="scheduled-trigger"><span class="secno">4.2.2. </span><span class="content">Scheduled trigger</span><a class="self-link" href="#scheduled-trigger"></a></h4>
+   <p>A scheduled trigger is defined as a recurrent activity at a scheduled interval.
+In the example below we assume that cron based process is capable to generate
+an AS2 notification at a specific time. We assume that every Friday at 17:00
+CEST the <code>Weekend</code> trigger is activated.</p>
+   <div class="example" id="example-876d8606">
+    <a class="self-link" href="#example-876d8606"></a> 
+<pre class="language-(JSON)">{
+  "@context": [
+      "https://www.w3.org/ns/activitystreams",
+      "https://www.example.org/ns/policy"
+  ] ,
+  "summary": "Time Trigger",
+  "name": "Weekend"
+  "type": [ "Announce" , "pol:DateTimeTrigger" ],
+  "startTime": "2021-07-09T17:00:00-01:00" ,
 }
 </pre>
+   </div>
+   <p>A policy rule could be that on weekends a notification is send out to your
+friends:</p>
+   <div class="example" id="example-cc351e63">
+    <a class="self-link" href="#example-cc351e63"></a> 
+<pre><b>rule</b> "Add State Trigger definitions"
+
+as:   &lt;https://www.w3.org/ns/activitystreams#>
+rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+pol:  &lt;https://www.example.org/ns/policy#>
+
+<b>when</b>
+
+  ?s a pol:DateTimeTrigger . AND ?s a as:Announce .
+  ?s as:name "Weekend" .
+
+<b>then</b>
+  ?s pol:policy [
+    a pol:SendAS2Notificaton ;
+    a as:Activity ;
+    as:actor [
+      a as:Person ;
+      as:name "Sally";
+    ] ;
+    as:object [
+      a as:Note ;
+      as:name "Let’s go to the pub"
+    ] ;
+    as:to &lt;http://pod.me/my#friends>
+  ] .
+
+</pre>
+   </div>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
