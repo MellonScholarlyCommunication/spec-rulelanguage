@@ -186,7 +186,7 @@ Some examples:
 
 ## Actions
 
-Action are a list of zero or more statements that mimic the triples that are generated
+Actions are a list of zero or more statements that mimic the triples that are generated
 by the SPARQL *CONSTRUCT* statement:
 
 <div class="example">
