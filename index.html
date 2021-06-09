@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
   <link href="https://mellonscholarlycommunication.github.io/spec-rulelanguage" rel="canonical">
-  <meta content="6615fff297a00f9c410593ad0ddc329768795915" name="document-revision">
+  <meta content="5cf3bf9690f251508b976cbfe717b94ad8b28035" name="document-revision">
 <style>
 table {
   margin: 25px auto;
@@ -1453,6 +1453,11 @@ Parts of this work may be from another specification document.  If so, those par
         <li><a href="#scheduled-trigger"><span class="secno">4.2.2</span> <span class="content">Scheduled trigger</span></a>
        </ol>
      </ol>
+    <li>
+     <a href="#implementation-hints"><span class="secno">5</span> <span class="content">Implementation Hints</span></a>
+     <ol class="toc">
+      <li><a href="#sparql"><span class="secno">5.1</span> <span class="content">SPARQL</span></a>
+     </ol>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
@@ -1549,12 +1554,12 @@ to the <a href="/spec-overview/#EventLog">EventLog</a> and removes the <code>bcc
    <p>Conditions in the <strong>when</strong> clause are interpreted as boolean statements. When the
 condition is in the format of a triple, it means the <em>existence</em> of the triple in the
 input data. This behavior matches SPARQL <em>WHERE</em> clause statements:</p>
-   <div class="example" id="example-c2f36f58">
-    <a class="self-link" href="#example-c2f36f58"></a> 
+   <div class="example" id="example-9ebace67">
+    <a class="self-link" href="#example-9ebace67"></a> 
 <pre><b>when</b>
     ?s foaf:name "Herbert"  .      # a property <code>foad:name</code> equals "Herbert" shoud exist
     ?s ?p  42  .                   # a property with value 42 should exist
-    ?s/as:object/nrr:reviews ?o  . # a nested as:object/nrr:reviews should exist
+    ?s as:object/nrr:reviews ?o  . # a nested as:object/nrr:reviews should exist
 </pre>
    </div>
    <p>Functions in our pseudolanguage mimic the SPARQL <em>FILTER</em> statements:</p>
@@ -1855,6 +1860,61 @@ pol:  &lt;https://www.example.org/ns/policy#>
     as:to &lt;http://pod.me/my#friends>
   ] .
 
+</pre>
+   </div>
+   <h2 class="heading settled" data-level="5" id="implementation-hints"><span class="secno">5. </span><span class="content">Implementation Hints</span><a class="self-link" href="#implementation-hints"></a></h2>
+   <h3 class="heading settled" data-level="5.1" id="sparql"><span class="secno">5.1. </span><span class="content">SPARQL</span><a class="self-link" href="#sparql"></a></h3>
+   <p>Example 2 - Add to the EventLog</p>
+   <div class="example" id="example-dddd179e">
+    <a class="self-link" href="#example-dddd179e"></a> 
+<pre>
+PREFIX as: &lt;https://www.w3.org/ns/activitystreams#>
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol:  &lt;https://www.example.org/ns/policy#>
+CONSTRUCT {
+  ?this pol:policy [  a pol:AppendToLog  ] .
+  ?this pol:policy [  a pol:RemoveBlindCopies   ] .
+}
+WHERE {
+  ?this a ?type .
+  FILTER ( ?type IN (as:Announce , as:Create) )
+}
+</pre>
+   </div>
+   <p>Example 5 - Conditions</p>
+   <div class="example" id="example-1010c81e">
+    <a class="self-link" href="#example-1010c81e"></a> 
+<pre>PREFIX as: &lt;https://www.w3.org/ns/activitystreams#>
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol:  &lt;https://www.example.org/ns/policy#>
+CONSTRUCT {
+  ...
+}
+WHERE {
+  ?this foaf:name "Herbert"  .
+  ?this ?p  42  .
+  ?this as:object/nrr:reviews ?o .
+}
+</pre>
+   </div>
+   <p>Example 7 - Function Examples</p>
+   <div class="example" id="example-9d91dec5">
+    <a class="self-link" href="#example-9d91dec5"></a> 
+<pre>PREFIX as: &lt;https://www.w3.org/ns/activitystreams#>
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol:  &lt;https://www.example.org/ns/policy#>
+CONSTRUCT {
+  ...
+}
+WHERE {
+  ?this a ?class .
+  ?this foo:name ?foo_val .
+  ?this as:object ?object_val .
+
+  FILTER ( ?class IN (as:Announce , as:Accept)  )
+  FILTER ( regex(?foo_val, "yahoo", i) )
+  FILTER ( isIRI(?object_val) || isBlank(?object_val) )
+}
 </pre>
    </div>
   </main>
