@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
   <link href="https://mellonscholarlycommunication.github.io/spec-rulelanguage" rel="canonical">
-  <meta content="5cf3bf9690f251508b976cbfe717b94ad8b28035" name="document-revision">
+  <meta content="ccefd6dcec7faad0ee12264cd29e33209aa09807" name="document-revision">
 <style>
 table {
   margin: 25px auto;
@@ -1402,7 +1402,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Rule language for decentralized business processes</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2021-06-09">9 June 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2021-06-10">10 June 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1419,7 +1419,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 9 June 2021,
+In addition, as of 10 June 2021,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1502,13 +1502,15 @@ of this language can be implemented in a concrete implementation.</p>
     <p>[<em>Action</em>] *</p>
    </div>
    <p>An example of a simple rule:</p>
-   <div class="example" id="example-911ef6ee">
-    <a class="self-link" href="#example-911ef6ee"></a> 
+   <div class="example" id="example-22d4746a">
+    <a class="self-link" href="#example-22d4746a"></a> 
 <pre><b>rule</b> "Add to the EventLog"
 
+ex:   &lt;http://example.org/>
 as:   &lt;https://www.w3.org/ns/activitystreams#>
 rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 pol:  &lt;https://www.example.org/ns/policy#>
+fno:  &lt;https://w3id.org/function/ontology#>
 
 <b>when</b>
 
@@ -1517,8 +1519,14 @@ pol:  &lt;https://www.example.org/ns/policy#>
 
 <b>then</b>
 
-  ?s pol:policy [  a pol:AppendToLog  ] .
-  ?s pol:policy [  a pol:RemoveBlindCopies   ].
+  ?s pol:policy [
+      a fno:Execution ;
+      fno:executes ex:appendToLog
+  ] .
+  ?s pol:policy [
+      a fno:Execution ;
+      fno:executes ex:removeBlindCopies
+  ] .
 </pre>
    </div>
    <p>Given an LDN Notification:</p>
@@ -1538,14 +1546,22 @@ pol:  &lt;https://www.example.org/ns/policy#>
 </pre>
    </div>
    <p>the rules will result in an output:</p>
-   <div class="example" id="example-ad513f54">
-    <a class="self-link" href="#example-ad513f54"></a> 
-<pre>@prefix as:   &lt;https://www.w3.org/ns/activitystreams#> .
+   <div class="example" id="example-b6431853">
+    <a class="self-link" href="#example-b6431853"></a> 
+<pre>@prefix ex:   &lt;http://example.org/> .
+@prefix as:   &lt;https://www.w3.org/ns/activitystreams#> .
 @prefix rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix pol:  &lt;https://www.example.org/ns/policy#> .
+@prefix fno:  &lt;https://www.example.org/ns/policy#> .
 
-&lt;http://this.document> pol:policy [  a pol:AppendToLog  ] .
-&lt;http://this.document> pol:policy [  a pol:RemoveBlindCopies   ].
+&lt;http://this.document> pol:policy [
+      a fno:Execution ;
+      fno:executes ex:appendToLog
+] .
+&lt;http://this.document> pol:policy [
+      a fno:Execution ;
+      fno:executes ex:removeBlindCopies
+] .
 </pre>
    </div>
    <p>These resulrs could start up an <a href="/spec-overview/#Orchestrator">Orchestrator</a> process that adds the Create event
@@ -1599,18 +1615,22 @@ input data. This behavior matches SPARQL <em>WHERE</em> clause statements:</p>
    <h3 class="heading settled" data-level="3.2" id="actions"><span class="secno">3.2. </span><span class="content">Actions</span><a class="self-link" href="#actions"></a></h3>
    <p>Actions are a list of zero or more statements that mimic the triples that are generated
 by the SPARQL <em>CONSTRUCT</em> statement:</p>
-   <div class="example" id="example-82ed858c">
-    <a class="self-link" href="#example-82ed858c"></a> 
+   <div class="example" id="example-9d2b69de">
+    <a class="self-link" href="#example-9d2b69de"></a> 
 <pre><b>then</b>
 
     ?this pol:policy [
-      a pol:SendMessage ;
-      as:to "http://my.institute.org/inbox" ;
-      as:from :Me ;
-      as:message "Hello world" .
+      a fno:Execution ;
+      fno:executes es:sendMessage ;
+      ex:to "http://my.institute.org/inbox" ;
+      ex:from :Me ;
+      ex:message "Hello world" .
     ] .
 
-    ?this pol:policy [ a pol:AppendToLog ] .
+    ?this pol:policy [
+      a fno:Execution ;
+      fno:executes ex:appendToLog
+    ] .
 
     (?this ?_ ?_) -> SomeFunctionThatGeneratesTriplesFor(?this) .
 </pre>
@@ -1663,20 +1683,25 @@ my:input_id my:match "second rule" .
    <h3 class="heading settled" data-level="4.1" id="receving-linked-data-notifications"><span class="secno">4.1. </span><span class="content">Receving Linked Data Notifications</span><a class="self-link" href="#receving-linked-data-notifications"></a></h3>
    <p>We demonstrate here how a policy can be created that acts on incoming Linked Data Notifications.</p>
    <p>This policy rule will request to add an <em>AS2 Offer</em> to the <strong>EventLog</strong>:</p>
-   <div class="example" id="example-11cc69b7">
-    <a class="self-link" href="#example-11cc69b7"></a> 
+   <div class="example" id="example-b45ecb3a">
+    <a class="self-link" href="#example-b45ecb3a"></a> 
 <pre><b>rule</b> "Add offer to the EventLog"
 
+ex:   &lt;http://example.org/>
 as:   &lt;https://www.w3.org/ns/activitystreams#>
 rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 pol:  &lt;https://www.example.org/ns/policy#>
+fno:  &lt;https://w3id.org/function/ontology#>
 
 <b>when</b>
 
   ?s a as:Offer .
 
 <b>then</b>
-  ?s pol:policy [ a pol:AppendToLog ] .
+  ?s pol:policy [
+    a fno:Execution ;
+    fno:executes ex:appendToLog
+  ] .
 </pre>
    </div>
    <p>Given the following JSON-LD input:</p>
@@ -1724,13 +1749,18 @@ pol:  &lt;https://www.example.org/ns/policy#>
 </pre>
    </div>
    <p>The policy rules above will result in a new graph with these triples:</p>
-   <div class="example" id="example-c10ad906">
-    <a class="self-link" href="#example-c10ad906"></a> 
-<pre>@prefix as:   &lt;https://www.w3.org/ns/activitystreams#> .
+   <div class="example" id="example-49788837">
+    <a class="self-link" href="#example-49788837"></a> 
+<pre>@prefix ex:   &lt;http://example.org/> .
+@prefix as:   &lt;https://www.w3.org/ns/activitystreams#> .
 @prefix rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix pol:  &lt;https://www.example.org/ns/policy#> .
+@prefix fno:  &lt;https://www.example.org/ns/policy#> .
 
-&lt;urn:uuid:0370c0fb-bb78-4a9b-87f5-bed307a509dd> pol:policy [ a pol:AppendToLog ] .
+&lt;urn:uuid:0370c0fb-bb78-4a9b-87f5-bed307a509dd> pol:policy [
+        a fno:Execution ;
+        fno:executes ex:appendToLog
+] .
 </pre>
    </div>
    <p>A policy language interpeter, such as the Orchestrator, could use the
@@ -1766,14 +1796,15 @@ the generation of an AS2 notification.</p>
 </pre>
    </div>
    <p>A policy rule to send emails when these types of StateTrigger occur can be defined as follows:</p>
-   <div class="example" id="example-20f00005">
-    <a class="self-link" href="#example-20f00005"></a> 
+   <div class="example" id="example-c816e744">
+    <a class="self-link" href="#example-c816e744"></a> 
 <pre><b>rule</b> "Add State Trigger definitions"
 
+ex:   &lt;http://example.org/>
 as:   &lt;https://www.w3.org/ns/activitystreams#>
 rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 pol:  &lt;https://www.example.org/ns/policy#>
-email: &lt;https://local.org/ns/email#>
+fno:  &lt;https://w3id.org/function/ontology#>
 
 <b>when</b>
 
@@ -1782,27 +1813,30 @@ email: &lt;https://local.org/ns/email#>
 
 <b>then</b>
   ?s pol:policy [
-    a email:SendEmail ;
-    email:from "my@myself.and.i" ;
-    email:to "you@yourself.edu" ;
-    email:subject "A new resource was created!"
+      a fno:Execution ;
+      fno:executes ex:sendEmail ;
+      ex:from "my@myself.and.i" ;
+      ex:to "you@yourself.edu" ;
+      ex:subject "A new resource was created!"
   ] .
 
 </pre>
    </div>
    <p>The execution of the policy rules will result in a new graph with these triples:</p>
-   <div class="example" id="example-839c5f3a">
-    <a class="self-link" href="#example-839c5f3a"></a> 
-<pre>@prefix as:   &lt;https://www.w3.org/ns/activitystreams#> .
+   <div class="example" id="example-ba5ac03e">
+    <a class="self-link" href="#example-ba5ac03e"></a> 
+<pre>@prefix ex:   &lt;http://example.org/> .
+@prefix as:   &lt;https://www.w3.org/ns/activitystreams#> .
 @prefix rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix pol:  &lt;https://www.example.org/ns/policy#> .
-@prefix email: &lt;https://local.org/ns/email#> .
+@prefix fno:  &lt;https://www.example.org/ns/policy#> .
 
 _:b0 pol:policy [
-  a email:SendEmail ;
-  email:from "my@myself.and.i" ;
-  email:to "you@yourself.edu" ;
-  email:subject "A new resource was created!"
+    a fno:Execution ;
+    fno:executes ex:sendEmail ;
+    ex:from "my@myself.and.i" ;
+    ex:to "you@yourself.edu" ;
+    ex:subject "A new resource was created!"
 ] .
 </pre>
    </div>
@@ -1832,13 +1866,15 @@ CEST the <code>Weekend</code> trigger is activated.</p>
    </div>
    <p>A policy rule could be that on weekends a notification is send out to your
 friends:</p>
-   <div class="example" id="example-cc351e63">
-    <a class="self-link" href="#example-cc351e63"></a> 
+   <div class="example" id="example-71834bc5">
+    <a class="self-link" href="#example-71834bc5"></a> 
 <pre><b>rule</b> "Add State Trigger definitions"
 
+ex:   &lt;http://example.org/>
 as:   &lt;https://www.w3.org/ns/activitystreams#>
 rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 pol:  &lt;https://www.example.org/ns/policy#>
+fno:  &lt;https://w3id.org/function/ontology#>
 
 <b>when</b>
 
@@ -1847,17 +1883,20 @@ pol:  &lt;https://www.example.org/ns/policy#>
 
 <b>then</b>
   ?s pol:policy [
-    a pol:SendAS2Notificaton ;
-    a as:Activity ;
-    as:actor [
-      a as:Person ;
-      as:name "Sally";
-    ] ;
-    as:object [
-      a as:Note ;
-      as:name "Let’s go to the pub"
-    ] ;
-    as:to &lt;http://pod.me/my#friends>
+    a fno:Execution ;
+    fno:executes ex:sendActivity ;
+    ex:body [
+      a as:Activity ;
+      as:actor [
+        a as:Person ;
+        as:name "Sally";
+      ] ;
+      as:object [
+        a as:Note ;
+        as:name "Let’s go to the pub"
+      ] ;
+      as:to &lt;http://pod.me/my#friends>
+    ]
   ] .
 
 </pre>
@@ -1865,15 +1904,23 @@ pol:  &lt;https://www.example.org/ns/policy#>
    <h2 class="heading settled" data-level="5" id="implementation-hints"><span class="secno">5. </span><span class="content">Implementation Hints</span><a class="self-link" href="#implementation-hints"></a></h2>
    <h3 class="heading settled" data-level="5.1" id="sparql"><span class="secno">5.1. </span><span class="content">SPARQL</span><a class="self-link" href="#sparql"></a></h3>
    <p>Example 2 - Add to the EventLog</p>
-   <div class="example" id="example-dddd179e">
-    <a class="self-link" href="#example-dddd179e"></a> 
-<pre>
+   <div class="example" id="example-9c7703e8">
+    <a class="self-link" href="#example-9c7703e8"></a> 
+<pre>PREFIX ex: &lt;http://example.org/>
 PREFIX as: &lt;https://www.w3.org/ns/activitystreams#>
 PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX pol:  &lt;https://www.example.org/ns/policy#>
+PREFIX pol: &lt;https://www.example.org/ns/policy#>
+PREFIX fno: &lt;https://w3id.org/function/ontology#>
+
 CONSTRUCT {
-  ?this pol:policy [  a pol:AppendToLog  ] .
-  ?this pol:policy [  a pol:RemoveBlindCopies   ] .
+  ?this pol:policy [
+      a fno:Execution ;
+      fno:executes ex:appendToLog
+  ] .
+  ?this pol:policy [
+      a fno:Execution ;
+      fno:executes ex:removeBlindCopies
+  ] .
 }
 WHERE {
   ?this a ?type .
@@ -1882,11 +1929,13 @@ WHERE {
 </pre>
    </div>
    <p>Example 5 - Conditions</p>
-   <div class="example" id="example-1010c81e">
-    <a class="self-link" href="#example-1010c81e"></a> 
-<pre>PREFIX as: &lt;https://www.w3.org/ns/activitystreams#>
+   <div class="example" id="example-0cb302c1">
+    <a class="self-link" href="#example-0cb302c1"></a> 
+<pre>PREFIX ex: &lt;http://example.org/>
+PREFIX as: &lt;https://www.w3.org/ns/activitystreams#>
 PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX pol:  &lt;https://www.example.org/ns/policy#>
+PREFIX pol: &lt;https://www.example.org/ns/policy#>
+PREFIX fno: &lt;https://w3id.org/function/ontology#>
 CONSTRUCT {
   ...
 }
@@ -1898,11 +1947,13 @@ WHERE {
 </pre>
    </div>
    <p>Example 7 - Function Examples</p>
-   <div class="example" id="example-9d91dec5">
-    <a class="self-link" href="#example-9d91dec5"></a> 
-<pre>PREFIX as: &lt;https://www.w3.org/ns/activitystreams#>
+   <div class="example" id="example-8bffbf9a">
+    <a class="self-link" href="#example-8bffbf9a"></a> 
+<pre>PREFIX ex: &lt;http://example.org/>
+PREFIX as: &lt;https://www.w3.org/ns/activitystreams#>
 PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX pol:  &lt;https://www.example.org/ns/policy#>
+PREFIX pol: &lt;https://www.example.org/ns/policy#>
+PREFIX fno: &lt;https://w3id.org/function/ontology#>
 CONSTRUCT {
   ...
 }
