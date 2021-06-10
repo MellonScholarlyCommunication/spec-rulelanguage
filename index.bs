@@ -93,9 +93,11 @@ An example of a simple rule:
 
 <b>rule</b> "Add to the EventLog"
 
+ex:   &lt;http://example.org/&gt;
 as:   &lt;https://www.w3.org/ns/activitystreams#&gt;
 rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 pol:  &lt;https://www.example.org/ns/policy#&gt;
+fno:  &lt;https://w3id.org/function/ontology#&gt;
 
 <b>when</b>
 
@@ -104,8 +106,14 @@ pol:  &lt;https://www.example.org/ns/policy#&gt;
 
 <b>then</b>
 
-  ?s pol:policy [  a pol:AppendToLog  ] .
-  ?s pol:policy [  a pol:RemoveBlindCopies   ].
+  ?s pol:policy [
+      a fno:Execution ;
+      fno:executes ex:appendToLog
+  ] .
+  ?s pol:policy [
+      a fno:Execution ;
+      fno:executes ex:removeBlindCopies
+  ] .
 </pre>
 
 </div>
@@ -132,12 +140,20 @@ the rules will result in an output:
 
 <div class="example">
 ```
+@prefix ex:   <http://example.org/> .
 @prefix as:   <https://www.w3.org/ns/activitystreams#> .
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix pol:  <https://www.example.org/ns/policy#> .
+@prefix fno:  <https://www.example.org/ns/policy#> .
 
-<http://this.document> pol:policy [  a pol:AppendToLog  ] .
-<http://this.document> pol:policy [  a pol:RemoveBlindCopies   ].
+<http://this.document> pol:policy [
+      a fno:Execution ;
+      fno:executes ex:appendToLog
+] .
+<http://this.document> pol:policy [
+      a fno:Execution ;
+      fno:executes ex:removeBlindCopies
+] .
 ```
 </div>
 
@@ -207,13 +223,17 @@ by the SPARQL *CONSTRUCT* statement:
 <b>then</b>
 
     ?this pol:policy [
-      a pol:SendMessage ;
-      as:to "http://my.institute.org/inbox" ;
-      as:from :Me ;
-      as:message "Hello world" .
+      a fno:Execution ;
+      fno:executes es:sendMessage ;
+      ex:to "http://my.institute.org/inbox" ;
+      ex:from :Me ;
+      ex:message "Hello world" .
     ] .
 
-    ?this pol:policy [ a pol:AppendToLog ] .
+    ?this pol:policy [
+      a fno:Execution ;
+      fno:executes ex:appendToLog
+    ] .
 
     (?this ?_ ?_) -> SomeFunctionThatGeneratesTriplesFor(?this) .
 </pre>
@@ -283,16 +303,21 @@ This policy rule will request to add an *AS2 Offer* to the **EventLog**:
 <pre>
 <b>rule</b> "Add offer to the EventLog"
 
+ex:   &lt;http://example.org/&gt;
 as:   &lt;https://www.w3.org/ns/activitystreams#&gt;
 rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 pol:  &lt;https://www.example.org/ns/policy#&gt;
+fno:  &lt;https://w3id.org/function/ontology#&gt;
 
 <b>when</b>
 
   ?s a as:Offer .
 
 <b>then</b>
-  ?s pol:policy [ a pol:AppendToLog ] .
+  ?s pol:policy [
+    a fno:Execution ;
+    fno:executes ex:appendToLog
+  ] .
 </pre>
 </div>
 
@@ -346,11 +371,16 @@ The policy rules above will result in a new graph with these triples:
 
 <div class="example">
 ```
+@prefix ex:   <http://example.org/> .
 @prefix as:   <https://www.w3.org/ns/activitystreams#> .
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix pol:  <https://www.example.org/ns/policy#> .
+@prefix fno:  <https://www.example.org/ns/policy#> .
 
-<urn:uuid:0370c0fb-bb78-4a9b-87f5-bed307a509dd> pol:policy [ a pol:AppendToLog ] .
+<urn:uuid:0370c0fb-bb78-4a9b-87f5-bed307a509dd> pol:policy [
+        a fno:Execution ;
+        fno:executes ex:appendToLog
+] .
 ```
 </div>
 
@@ -402,10 +432,11 @@ A policy rule to send emails when these types of StateTrigger occur can be defin
 
 <b>rule</b> "Add State Trigger definitions"
 
+ex:   &lt;http://example.org/&gt;
 as:   &lt;https://www.w3.org/ns/activitystreams#&gt;
 rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 pol:  &lt;https://www.example.org/ns/policy#&gt;
-email: &lt;https://local.org/ns/email#&gt;
+fno:  &lt;https://w3id.org/function/ontology#&gt;
 
 <b>when</b>
 
@@ -414,10 +445,11 @@ email: &lt;https://local.org/ns/email#&gt;
 
 <b>then</b>
   ?s pol:policy [
-    a email:SendEmail ;
-    email:from "my@myself.and.i" ;
-    email:to "you@yourself.edu" ;
-    email:subject "A new resource was created!"
+      a fno:Execution ;
+      fno:executes ex:sendEmail ;
+      ex:from "my@myself.and.i" ;
+      ex:to "you@yourself.edu" ;
+      ex:subject "A new resource was created!"
   ] .
 
 </pre>
@@ -427,16 +459,18 @@ The execution of the policy rules will result in a new graph with these triples:
 
 <div class="example">
 ```
+@prefix ex:   <http://example.org/> .
 @prefix as:   <https://www.w3.org/ns/activitystreams#> .
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix pol:  <https://www.example.org/ns/policy#> .
-@prefix email: <https://local.org/ns/email#> .
+@prefix fno:  <https://www.example.org/ns/policy#> .
 
 _:b0 pol:policy [
-  a email:SendEmail ;
-  email:from "my@myself.and.i" ;
-  email:to "you@yourself.edu" ;
-  email:subject "A new resource was created!"
+    a fno:Execution ;
+    fno:executes ex:sendEmail ;
+    ex:from "my@myself.and.i" ;
+    ex:to "you@yourself.edu" ;
+    ex:subject "A new resource was created!"
 ] .
 ```
 </div>
@@ -480,9 +514,11 @@ friends:
 
 <b>rule</b> "Add State Trigger definitions"
 
+ex:   &lt;http://example.org/&gt;
 as:   &lt;https://www.w3.org/ns/activitystreams#&gt;
 rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 pol:  &lt;https://www.example.org/ns/policy#&gt;
+fno:  &lt;https://w3id.org/function/ontology#&gt;
 
 <b>when</b>
 
@@ -491,17 +527,20 @@ pol:  &lt;https://www.example.org/ns/policy#&gt;
 
 <b>then</b>
   ?s pol:policy [
-    a pol:SendAS2Notificaton ;
-    a as:Activity ;
-    as:actor [
-      a as:Person ;
-      as:name "Sally";
-    ] ;
-    as:object [
-      a as:Note ;
-      as:name "Let's go to the pub"
-    ] ;
-    as:to &lt;http://pod.me/my#friends&gt;
+    a fno:Execution ;
+    fno:executes ex:sendActivity ;
+    ex:body [
+      a as:Activity ;
+      as:actor [
+        a as:Person ;
+        as:name "Sally";
+      ] ;
+      as:object [
+        a as:Note ;
+        as:name "Let's go to the pub"
+      ] ;
+      as:to &lt;http://pod.me/my#friends&gt;
+    ]
   ] .
 
 </pre>
@@ -516,13 +555,21 @@ Example 2 - Add to the EventLog
 
 <div class="example">
 ```
-
+PREFIX ex: <http://example.org/>
 PREFIX as: <https://www.w3.org/ns/activitystreams#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX pol:  <https://www.example.org/ns/policy#>
+PREFIX pol: <https://www.example.org/ns/policy#>
+PREFIX fno: <https://w3id.org/function/ontology#>
+
 CONSTRUCT {
-  ?this pol:policy [  a pol:AppendToLog  ] .
-  ?this pol:policy [  a pol:RemoveBlindCopies   ] .
+  ?this pol:policy [
+      a fno:Execution ;
+      fno:executes ex:appendToLog
+  ] .
+  ?this pol:policy [
+      a fno:Execution ;
+      fno:executes ex:removeBlindCopies
+  ] .
 }
 WHERE {
   ?this a ?type .
@@ -535,9 +582,11 @@ Example 5 - Conditions
 
 <div class="example">
 ```
+PREFIX ex: <http://example.org/>
 PREFIX as: <https://www.w3.org/ns/activitystreams#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX pol:  <https://www.example.org/ns/policy#>
+PREFIX pol: <https://www.example.org/ns/policy#>
+PREFIX fno: <https://w3id.org/function/ontology#>
 CONSTRUCT {
   ...
 }
@@ -553,9 +602,11 @@ Example 7 - Function Examples
 
 <div class="example">
 ```
+PREFIX ex: <http://example.org/>
 PREFIX as: <https://www.w3.org/ns/activitystreams#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX pol:  <https://www.example.org/ns/policy#>
+PREFIX pol: <https://www.example.org/ns/policy#>
+PREFIX fno: <https://w3id.org/function/ontology#>
 CONSTRUCT {
   ...
 }
