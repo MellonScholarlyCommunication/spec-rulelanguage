@@ -224,10 +224,10 @@ by the SPARQL *CONSTRUCT* statement:
 
     ?this pol:policy [
       a fno:Execution ;
-      fno:executes es:sendMessage ;
+      fno:executes ex:sendMessage ;
       ex:to "http://my.institute.org/inbox" ;
       ex:from :Me ;
-      ex:message "Hello world" .
+      ex:message "Hello world"
     ] .
 
     ?this pol:policy [
