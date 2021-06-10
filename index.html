@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
   <link href="https://mellonscholarlycommunication.github.io/spec-rulelanguage" rel="canonical">
-  <meta content="ccefd6dcec7faad0ee12264cd29e33209aa09807" name="document-revision">
+  <meta content="8fc24170f4e94444ec51fca891568ec7b1b18d96" name="document-revision">
 <style>
 table {
   margin: 25px auto;
@@ -1615,16 +1615,16 @@ input data. This behavior matches SPARQL <em>WHERE</em> clause statements:</p>
    <h3 class="heading settled" data-level="3.2" id="actions"><span class="secno">3.2. </span><span class="content">Actions</span><a class="self-link" href="#actions"></a></h3>
    <p>Actions are a list of zero or more statements that mimic the triples that are generated
 by the SPARQL <em>CONSTRUCT</em> statement:</p>
-   <div class="example" id="example-9d2b69de">
-    <a class="self-link" href="#example-9d2b69de"></a> 
+   <div class="example" id="example-37e0eada">
+    <a class="self-link" href="#example-37e0eada"></a> 
 <pre><b>then</b>
 
     ?this pol:policy [
       a fno:Execution ;
-      fno:executes es:sendMessage ;
+      fno:executes ex:sendMessage ;
       ex:to "http://my.institute.org/inbox" ;
       ex:from :Me ;
-      ex:message "Hello world" .
+      ex:message "Hello world"
     ] .
 
     ?this pol:policy [
