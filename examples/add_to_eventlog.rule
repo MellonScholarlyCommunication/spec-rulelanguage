@@ -1,0 +1,22 @@
+rule "Add to the EventLog"
+
+ex:   <http://example.org/>
+as:   <https://www.w3.org/ns/activitystreams>
+rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+pol:  <https://www.example.org/ns/policy#>
+fno:  <https://w3id.org/function/ontology#>
+
+when
+
+  ?s a as:Announce . OR ?s a as:Create .
+
+then
+
+  ?s pol:policy [
+      a fno:Execution ;
+      fno:executes ex:appendToLog
+  ] .
+  ?s pol:policy [
+      a fno:Execution ;
+      fno:executes ex:removeBlindCopies
+  ] .
