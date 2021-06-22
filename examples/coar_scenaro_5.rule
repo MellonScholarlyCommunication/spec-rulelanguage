@@ -40,8 +40,9 @@ when
 
   # It is an AS2 Reject by myself to an offer
   ?this a as:Reject .
-  ?this as:inReplyTo/a as:Offer .
-  ?this as:inReplyTo/a coar-notify:ReviewRequest .
+  ?this as:inReplyTo ?notification
+  ?notification a as:Offer .
+  ?notification a coar-notify:ReviewRequest .
 
   # The origin is myself
   ?this as:origin "http://pod.institution.org/reseacher/alice" .
@@ -52,7 +53,8 @@ then
   ?this pol:policy [
       a fno:Execution ;
       fno:execute ex:sendNotification ;
-      ex:type     ex:RejectOffer
+      ex:type     ex:RejectOffer ;
+      ex:inReplyTo ?notification
   ]
 
 rule "Response to an accept offer response from myself"
@@ -61,8 +63,9 @@ when
 
   # It is an AS2 Reject by myself to an offer
   ?this a as:Accept .
-  ?this as:inReplyTo/a as:Offer .
-  ?this as:inReplyTo/a coar-notify:ReviewRequest .
+  ?this as:inReplyTo ?notification
+  ?notification a as:Offer .
+  ?notification a coar-notify:ReviewRequest .
 
   # The origin is myself
   ?this as:origin "http://pod.institution.org/reseacher/alice" .
@@ -72,6 +75,7 @@ then
   # Forward the Rejection to the Service Hub
   ?this pol:policy [
       a fno:Execution ;
-      fno:execute ex:sendNotification ;
-      ex:type     ex:AcceptOffer
+      fno:execute ex:sendActivity ;
+      ex:type     ex:AcceptOffer ;
+      ex:inReplyTo ?notification
   ]
