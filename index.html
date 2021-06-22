@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
   <link href="https://mellonscholarlycommunication.github.io/spec-rulelanguage" rel="canonical">
-  <meta content="55f531c23b4a8c3b62598a9c1d93ffb53bd7f1f4" name="document-revision">
+  <meta content="38d56a14a66075ee1038815957798506815fb097" name="document-revision">
 <style>
 table {
   margin: 25px auto;
@@ -1402,7 +1402,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Rule language for decentralized business processes</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Living Standard, <time class="dt-updated" datetime="2021-06-15">15 June 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Living Standard, <time class="dt-updated" datetime="2021-06-22">22 June 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1419,7 +1419,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 15 June 2021,
+In addition, as of 22 June 2021,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1436,7 +1436,7 @@ Parts of this work may be from another specification document.  If so, those par
     <li><a href="#set"><span class="secno">1</span> <span class="content">Set of documents</span></a>
     <li><a href="#intro"><span class="secno">2</span> <span class="content">Introduction</span></a>
     <li>
-     <a href="#policy-language"><span class="secno">3</span> <span class="content">Policy language</span></a>
+     <a href="#rulebook-language"><span class="secno">3</span> <span class="content">Rulebook language</span></a>
      <ol class="toc">
       <li><a href="#conditions"><span class="secno">3.1</span> <span class="content">Conditions</span></a>
       <li><a href="#actions"><span class="secno">3.2</span> <span class="content">Actions</span></a>
@@ -1485,14 +1485,14 @@ Parts of this work may be from another specification document.  If so, those par
    </ol>
    <h2 class="heading settled" data-level="2" id="intro"><span class="secno">2. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
    <p>Introduction here.</p>
-   <h2 class="heading settled" data-level="3" id="policy-language"><span class="secno">3. </span><span class="content">Policy language</span><a class="self-link" href="#policy-language"></a></h2>
-   <p>A Policy is set of machine-readable business rules that instruct the Orchestrator
+   <h2 class="heading settled" data-level="3" id="rulebook-language"><span class="secno">3. </span><span class="content">Rulebook language</span><a class="self-link" href="#rulebook-language"></a></h2>
+   <p>A Rulebook is set of machine-readable business rules that instruct the Orchestrator
 what <a href="/spec-overview/#Action">Actions</a> to take in response to a <a href="/spec-overview/#Trigger">Trigger</a> such as incoming LDN notifications.</p>
    <p>To demonstrate the capabilities of the policies and possible use-cases it should cover, we introduce a
 pseudo rule language which acts as a guide to find reference implementations. Our pseudolanguage
 combines features of Drools and SPARQL. Examples are given how some of the features
 of this language can be implemented in a concrete implementation.</p>
-   <p>Each rule in a policy document has the structure of <strong>rule</strong>, <strong>when</strong>, <strong>then</strong> clauses:</p>
+   <p>Each rule in a rulebook has the structure of <strong>rule</strong>, <strong>when</strong>, <strong>then</strong> clauses:</p>
    <div class="example" id="example-81ac911c">
     <a class="self-link" href="#example-81ac911c"></a> <strong>rule</strong> <em>Name</em> 
     <p>[<em>Prefix</em>]*</p>
@@ -1681,8 +1681,8 @@ my:input_id my:match "second rule" .
    <p class="note" role="note"><span>Note:</span> the order in which the rules are executed is not specified.</p>
    <h2 class="heading settled" data-level="4" id="examples"><span class="secno">4. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="receving-linked-data-notifications"><span class="secno">4.1. </span><span class="content">Receving Linked Data Notifications</span><a class="self-link" href="#receving-linked-data-notifications"></a></h3>
-   <p>We demonstrate here how a policy can be created that acts on incoming Linked Data Notifications.</p>
-   <p>This policy rule will request to add an <em>AS2 Offer</em> to the <strong>EventLog</strong>:</p>
+   <p>We demonstrate here how a rule can be created that acts on incoming Linked Data Notifications.</p>
+   <p>This rule will request to add an <em>AS2 Offer</em> to the <strong>EventLog</strong>:</p>
    <div class="example" id="example-b45ecb3a">
     <a class="self-link" href="#example-b45ecb3a"></a> 
 <pre><b>rule</b> "Add offer to the EventLog"
@@ -1748,7 +1748,7 @@ fno:  &lt;https://w3id.org/function/ontology#>
 }
 </pre>
    </div>
-   <p>The policy rules above will result in a new graph with these triples:</p>
+   <p>The rulebook above will result in a new graph with these triples:</p>
    <div class="example" id="example-49788837">
     <a class="self-link" href="#example-49788837"></a> 
 <pre>@prefix ex:   &lt;http://example.org/> .
@@ -1763,7 +1763,7 @@ fno:  &lt;https://w3id.org/function/ontology#>
 ] .
 </pre>
    </div>
-   <p>A policy language interpeter, such as the Orchestrator, could use the
+   <p>A rulebook interpeter, such as the Orchestrator, could use the
 new generated graph to write a copy of the notification in some way to the
 Artefact Lifecycle Event Log. The <code>pol:AppendToLog</code> is interpreted in this way
 as some agreed procedure call that needs to be executed on the JSON-LD input.</p>
@@ -1771,9 +1771,8 @@ as some agreed procedure call that needs to be executed on the JSON-LD input.</p
    <p>AS2 Notifications can not only be generated by external actors but
 also internal local processes. For instance, at periodic intervals the
 Orchestrator can monitor an (external) resource. When the state of a resource
-changes, then it can trigger the creation of a AS2 notification. The policy
-language rules can act on these notifications and decide what to do with
-this information.</p>
+changes, then it can trigger the creation of a AS2 notification. The rulebook
+can act on these notifications and decide what to do with this information.</p>
    <p>How these internal trigger notifications get generated is outside the scope
 of this specification. We assume that the activation of a trigger results in
 the generation of an AS2 notification.</p>
@@ -1795,7 +1794,7 @@ the generation of an AS2 notification.</p>
 }
 </pre>
    </div>
-   <p>A policy rule to send emails when these types of StateTrigger occur can be defined as follows:</p>
+   <p>A rulebook to send emails when these types of StateTrigger occur can be defined as follows:</p>
    <div class="example" id="example-c816e744">
     <a class="self-link" href="#example-c816e744"></a> 
 <pre><b>rule</b> "Add State Trigger definitions"
@@ -1822,7 +1821,7 @@ fno:  &lt;https://w3id.org/function/ontology#>
 
 </pre>
    </div>
-   <p>The execution of the policy rules will result in a new graph with these triples:</p>
+   <p>The execution of the rulebook will result in a new graph with these triples:</p>
    <div class="example" id="example-ba5ac03e">
     <a class="self-link" href="#example-ba5ac03e"></a> 
 <pre>@prefix ex:   &lt;http://example.org/> .
@@ -1844,7 +1843,7 @@ _:b0 pol:policy [
 send an email to <code>you@yourself.edu</code> about the new resource.</p>
    <div class="note" role="note"> We assume there are some reasonable security measures in place, such as digital
 signatures, to limit the applications that are allowed to send these type of
-trigger events to the policy rule engine. </div>
+trigger events to the rulebook engine. </div>
    <h4 class="heading settled" data-level="4.2.2" id="scheduled-trigger"><span class="secno">4.2.2. </span><span class="content">Scheduled trigger</span><a class="self-link" href="#scheduled-trigger"></a></h4>
    <p>A scheduled trigger is defined as a recurrent activity at a scheduled interval.
 In the example below we assume that cron based process is capable to generate

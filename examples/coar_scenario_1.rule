@@ -1,0 +1,56 @@
+# Create a backlink to a review when an overlay journal creates a review
+#
+# See:
+#   https://notify.coar-repositories.org/scenarios/1/
+#
+# for an example scenario
+#
+rulebook "Coar Scenario 1"
+
+as:          <https://www.w3.org/ns/activitystreams#>
+coar-notify: <http://purl.org//coar/notify_vocabulary/>
+sorg:        <https://schema.org/>
+rdf:         <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+pol:         <https://www.example.org/ns/policy#>
+fno:         <https://w3id.org/function/ontology#>
+
+rule "Create a backlink to a review"
+
+when
+
+  # It is an AS2 announce of a ReviewSuccess type
+  ?this a as:Announce .
+  ?this a coar-notify:ReviewSuccess .
+
+  # The target is myself
+  ?this as:target "http://pod.institution.org/reseacher/alice" .
+
+then
+
+  # Create a backlink
+  ?this pol:policy [
+      a fno:Execution ;
+      fno:executes ex:addLink ;
+      ex:linkType  ex:ReviewLink
+  ] .
+
+
+rule "Create a link to an endorsement"
+
+when
+
+  # It is an AS2 announce of a ReviewSuccess type
+  ?this a as:Announce .
+  ?this a coar-notify:EndorsementSuccess .
+
+  # The target is myself
+  ?this as:target "http://pod.institution.org/reseacher/alice" .
+
+then
+
+  # Create a backlink
+  ?this pol:policy [
+      a fno:Execution ;
+      fno:executes ex:addLink ;
+      ex:linkType  ex:EndorsementLink
+  ] .
