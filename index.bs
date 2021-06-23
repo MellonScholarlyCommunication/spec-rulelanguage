@@ -69,10 +69,16 @@ pseudo rule language which acts as a guide to find reference implementations. Ou
 combines features of Drools and SPARQL. Examples are given how some of the features
 of this language can be implemented in a concrete implementation.
 
-Each rule in a rulebook has the structure of **rule**, **when**, **then** clauses:
+Each rule in a rulebook has the structure of **rulebook**, **rule**, **when**, **then** clauses:
 
 <div class="example">
-**rule** *Name*
+**rulebook** *Description*?
+
+&#35; This is a comment
+
+[*Prefix*]*
+
+**rule** *Description*?
 
 [*Prefix*]*
 
@@ -84,6 +90,14 @@ Each rule in a rulebook has the structure of **rule**, **when**, **then** clause
 
     [*Action*] *
 </div>
+
+A **rulebook** can have one or more **rule**-s. Each **rule** has one **when** clause that
+contains zero or more conditions that need to match for a graph. Each **rule** has one **then**
+clause that contains zero or more actions, new generated triples, when an input graph matches
+the conditions. The **rulebook** section and each **rule** can define prefix abbreviations for triple patterns.
+All lines starting with an hash (&#35;) are interpreted as comments.
+
+## Simple example
 
 An example of a simple rule:
 
@@ -241,7 +255,7 @@ by the SPARQL *CONSTRUCT* statement:
 
 ## Result
 
-The result of a rule execution it the generation of zero or more triples. These generated triples
+The result of a rule execution is the generation of zero or more triples. These generated triples
 create a graph independent from the input graph of the rule engine. Rules can't influence each other.
 This mimics the style of rule processing in SHACL.
 
