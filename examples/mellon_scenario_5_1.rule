@@ -34,6 +34,8 @@ then
       a fno:Execution ;
       fno:execute  pol:sendActivity ;
       pol:type     pol:AnnounceScholarlyWork  ;
+      # This could maybe be used as a default value for the as:target
+      # when no target is provided by the notification
       as:target    registration:
   ] .
 
@@ -41,5 +43,7 @@ then
   ?s pol:policy [
       a fno:Execution ;
       fno:executes pol:appendToLog ;
-      as:target    registration: 
+      # This could maybe be used as a default value for the as:target
+      # when no target is provided by the notification
+      as:target    registration:
   ] .

@@ -31,10 +31,9 @@ then
   # Create a backlink
   ?this pol:policy [
       a fno:Execution ;
-      fno:executes ex:addLink ;
-      ex:linkType  ex:ReviewLink
+      fno:executes pol:addLink ;
+      pol:linkType pol:ReviewLink
   ] .
-
 
 rule "Create a link to an endorsement"
 
@@ -52,6 +51,6 @@ then
   # Create a backlink
   ?this pol:policy [
       a fno:Execution ;
-      fno:executes ex:addLink ;
-      ex:linkType  ex:EndorsementLink
+      fno:executes pol:addLink ;
+      pol:linkType  pol:EndorsementLink
   ] .

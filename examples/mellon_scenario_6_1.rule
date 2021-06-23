@@ -1,0 +1,31 @@
+#
+# See:
+#   https://mellonscholarlycommunication.github.io/coar-usecases/mellon-scenario.html#service-hub-announces-a-new-resource-about-an-artefact-in-the-data-pod
+rulebook "Service Hub Announces a new resource about an artefact in the Data Pod"
+
+myself:        <https://pod.institution.org/reseacher/alice>
+registration:  <https://repository.institution.org/inbox>
+as:            <https://www.w3.org/ns/activitystreams#>
+coar-notify:   <http://purl.org//coar/notify_vocabulary/>
+sorg:          <https://schema.org/>
+rdf:           <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+pol:           <https://www.example.org/ns/policy#>
+fno:           <https://w3id.org/function/ontology#>
+
+rule "Service Hub Announce is a response to a previous Offer"
+
+when
+
+  # An AS2 Announce was received...
+  ?this a as:Announce .
+
+  # ...in reply to a previous offer
+  (?this as:inReplyTo ?offer) -> isSentOffer(?offer)
+
+then
+
+  # Append to the Artefact EventLog
+  ?s pol:policy [
+      a fno:Execution ;
+      fno:executes pol:appendToLog ;
+  ] .
