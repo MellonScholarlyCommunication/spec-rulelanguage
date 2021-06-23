@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
   <link href="https://mellonscholarlycommunication.github.io/spec-rulelanguage" rel="canonical">
-  <meta content="38d56a14a66075ee1038815957798506815fb097" name="document-revision">
+  <meta content="7cd085caa0b79d476e882d9cb2aa3a41f0ef993e" name="document-revision">
 <style>
 table {
   margin: 25px auto;
@@ -1402,7 +1402,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Rule language for decentralized business processes</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Living Standard, <time class="dt-updated" datetime="2021-06-22">22 June 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Living Standard, <time class="dt-updated" datetime="2021-06-23">23 June 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1419,7 +1419,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 22 June 2021,
+In addition, as of 23 June 2021,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1438,9 +1438,10 @@ Parts of this work may be from another specification document.  If so, those par
     <li>
      <a href="#rulebook-language"><span class="secno">3</span> <span class="content">Rulebook language</span></a>
      <ol class="toc">
-      <li><a href="#conditions"><span class="secno">3.1</span> <span class="content">Conditions</span></a>
-      <li><a href="#actions"><span class="secno">3.2</span> <span class="content">Actions</span></a>
-      <li><a href="#result"><span class="secno">3.3</span> <span class="content">Result</span></a>
+      <li><a href="#simple-example"><span class="secno">3.1</span> <span class="content">Simple example</span></a>
+      <li><a href="#conditions"><span class="secno">3.2</span> <span class="content">Conditions</span></a>
+      <li><a href="#actions"><span class="secno">3.3</span> <span class="content">Actions</span></a>
+      <li><a href="#result"><span class="secno">3.4</span> <span class="content">Result</span></a>
      </ol>
     <li>
      <a href="#examples"><span class="secno">4</span> <span class="content">Examples</span></a>
@@ -1492,15 +1493,23 @@ what <a href="/spec-overview/#Action">Actions</a> to take in response to a <a hr
 pseudo rule language which acts as a guide to find reference implementations. Our pseudolanguage
 combines features of Drools and SPARQL. Examples are given how some of the features
 of this language can be implemented in a concrete implementation.</p>
-   <p>Each rule in a rulebook has the structure of <strong>rule</strong>, <strong>when</strong>, <strong>then</strong> clauses:</p>
-   <div class="example" id="example-81ac911c">
-    <a class="self-link" href="#example-81ac911c"></a> <strong>rule</strong> <em>Name</em> 
+   <p>Each rule in a rulebook has the structure of <strong>rulebook</strong>, <strong>rule</strong>, <strong>when</strong>, <strong>then</strong> clauses:</p>
+   <div class="example" id="example-fef4fe7b">
+    <a class="self-link" href="#example-fef4fe7b"></a> <strong>rulebook</strong> <em>Description</em>? 
+    <p># This is a comment</p>
+    <p>[<em>Prefix</em>]*</p>
+    <p><strong>rule</strong> <em>Description</em>?</p>
     <p>[<em>Prefix</em>]*</p>
     <p><strong>when</strong></p>
     <p>[<em>Condition</em>] *</p>
     <p><strong>then</strong></p>
     <p>[<em>Action</em>] *</p>
    </div>
+   <p>A <strong>rulebook</strong> can have one or more <strong>rule</strong>-s. Each <strong>rule</strong> has one <strong>when</strong> clause that
+contains zero or more conditions that need to match for a graph. Each <strong>rule</strong> has one <strong>then</strong> clause that contains zero or more actions, new generated triples, when an input graph matches
+the conditions. The <strong>rulebook</strong> section and each <strong>rule</strong> can define prefix abbreviations for triple patterns.
+All lines starting with an hash (#) are interpreted as comments.</p>
+   <h3 class="heading settled" data-level="3.1" id="simple-example"><span class="secno">3.1. </span><span class="content">Simple example</span><a class="self-link" href="#simple-example"></a></h3>
    <p>An example of a simple rule:</p>
    <div class="example" id="example-22d4746a">
     <a class="self-link" href="#example-22d4746a"></a> 
@@ -1566,7 +1575,7 @@ fno:  &lt;https://w3id.org/function/ontology#>
    </div>
    <p>These resulrs could start up an <a href="/spec-overview/#Orchestrator">Orchestrator</a> process that adds the Create event
 to the <a href="/spec-overview/#EventLog">EventLog</a> and removes the <code>bcc</code> blind copies.</p>
-   <h3 class="heading settled" data-level="3.1" id="conditions"><span class="secno">3.1. </span><span class="content">Conditions</span><a class="self-link" href="#conditions"></a></h3>
+   <h3 class="heading settled" data-level="3.2" id="conditions"><span class="secno">3.2. </span><span class="content">Conditions</span><a class="self-link" href="#conditions"></a></h3>
    <p>Conditions in the <strong>when</strong> clause are interpreted as boolean statements. When the
 condition is in the format of a triple, it means the <em>existence</em> of the triple in the
 input data. This behavior matches SPARQL <em>WHERE</em> clause statements:</p>
@@ -1612,7 +1621,7 @@ input data. This behavior matches SPARQL <em>WHERE</em> clause statements:</p>
 
 </pre>
    </div>
-   <h3 class="heading settled" data-level="3.2" id="actions"><span class="secno">3.2. </span><span class="content">Actions</span><a class="self-link" href="#actions"></a></h3>
+   <h3 class="heading settled" data-level="3.3" id="actions"><span class="secno">3.3. </span><span class="content">Actions</span><a class="self-link" href="#actions"></a></h3>
    <p>Actions are a list of zero or more statements that mimic the triples that are generated
 by the SPARQL <em>CONSTRUCT</em> statement:</p>
    <div class="example" id="example-37e0eada">
@@ -1635,8 +1644,8 @@ by the SPARQL <em>CONSTRUCT</em> statement:</p>
     (?this ?_ ?_) -> SomeFunctionThatGeneratesTriplesFor(?this) .
 </pre>
    </div>
-   <h3 class="heading settled" data-level="3.3" id="result"><span class="secno">3.3. </span><span class="content">Result</span><a class="self-link" href="#result"></a></h3>
-   <p>The result of a rule execution it the generation of zero or more triples. These generated triples
+   <h3 class="heading settled" data-level="3.4" id="result"><span class="secno">3.4. </span><span class="content">Result</span><a class="self-link" href="#result"></a></h3>
+   <p>The result of a rule execution is the generation of zero or more triples. These generated triples
 create a graph independent from the input graph of the rule engine. Rules can’t influence each other.
 This mimics the style of rule processing in SHACL.</p>
    <p>An example:</p>
