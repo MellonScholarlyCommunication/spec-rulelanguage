@@ -512,9 +512,9 @@ CEST the `Weekend` trigger is activated.
       "https://www.example.org/ns/policy"
   ] ,
   "summary": "Time Trigger",
-  "name": "Weekend"
+  "name": "Weekend",
   "type": [ "Announce" , "pol:DateTimeTrigger" ],
-  "startTime": "2021-07-09T17:00:00-01:00" ,
+  "startTime": "2021-07-09T17:00:00-01:00"
 }
 ```
 </div>
