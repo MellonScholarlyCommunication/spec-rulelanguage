@@ -7,7 +7,7 @@ rulebook "Maintainer Announces a (finished) artefact in the Data Pod"
 myself:        <https://pod.institution.org/reseacher/alice>
 registration:  <https://repository.institution.org/inbox>
 as:            <https://www.w3.org/ns/activitystreams#>
-coar-notify:   <http://purl.org//coar/notify_vocabulary/>
+coar-notify:   <http://purl.org/coar/notify_vocabulary/>
 sorg:          <https://schema.org/>
 rdf:           <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 pol:           <https://www.example.org/ns/policy#>
