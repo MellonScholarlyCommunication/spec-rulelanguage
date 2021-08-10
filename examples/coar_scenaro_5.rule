@@ -40,7 +40,7 @@ when
 
   # It is an AS2 Reject by myself to an offer
   ?this a as:Reject .
-  ?this as:inReplyTo ?notification
+  ?this as:inReplyTo ?notification .
   ?notification a as:Offer .
   ?notification a coar-notify:ReviewRequest .
 
@@ -63,7 +63,7 @@ when
 
   # It is an AS2 Reject by myself to an offer
   ?this a as:Accept .
-  ?this as:inReplyTo ?notification
+  ?this as:inReplyTo ?notification .
   ?notification a as:Offer .
   ?notification a coar-notify:ReviewRequest .
 
