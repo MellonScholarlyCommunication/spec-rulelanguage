@@ -25,7 +25,7 @@ when
 
   # ...about a new publication
   ?this as:object ?object .
-  (?object a ?type ) -> ?type IN (schema:Article schema:Review schema:Dataset)
+  (?object a ?type ) -> ?type IN (schema:Article schema:Review schema:Dataset).
 
 then
 
