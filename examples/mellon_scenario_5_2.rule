@@ -25,7 +25,7 @@ when
 
   # ...to a review service
   ?this as:target ?target .
-  ?target a coar-notify:ReviewService
+  ?target a coar-notify:ReviewService.
 
 then
 
@@ -37,7 +37,7 @@ then
   ] .
 
   # Append to the Artefact EventLog
-  ?s pol:policy [
+  ?this pol:policy [
       a fno:Execution ;
       fno:executes pol:appendToLog
   ] .
