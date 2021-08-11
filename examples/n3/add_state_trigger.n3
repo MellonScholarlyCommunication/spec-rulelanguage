@@ -1,0 +1,22 @@
+# Add State Trigger definitions
+
+PREFIX ex:   <http://example.org/>
+PREFIX as:   <https://www.w3.org/ns/activitystreams#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol:  <https://www.example.org/ns/policy#>
+PREFIX fno:  <https://w3id.org/function/ontology#>
+
+{
+  ?s a pol:StateTrigger .
+  ?s a as:Create .
+}
+=>
+{
+  ?s pol:policy [
+      a fno:Execution ;
+      fno:executes ex:sendEmail ;
+      ex:from "my@myself.and.i" ;
+      ex:to "you@yourself.edu" ;
+      ex:subject "A new resource was created!"
+  ] .
+}.

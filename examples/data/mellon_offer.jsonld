@@ -1,0 +1,19 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "urn:uuid:f817d720-c761-479b-967a-1b014556e9cd",
+  "actor": {
+    "id": "https://pod.institution.org/reseacher/alice",
+    "inbox": "https://pod.institution.org/reseacher/alice/inbox/",
+    "type": "Person"
+  },
+  "object": {
+    "id": "https://pod.institute.org/papers/201210811/n3rules/",
+    "type": "Article"
+  },
+  "target": {
+    "id": "https://reviewservice.org",
+    "inbox": "https://reviewservice.org/requests/inbox/",
+    "type": "Service"
+  },
+  "type": "Offer"
+}

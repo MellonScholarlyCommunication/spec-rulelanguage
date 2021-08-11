@@ -1,0 +1,79 @@
+# Coar Scenario 5
+#
+# Accept and Reject requests
+#
+# See:
+#   https://notify.coar-repositories.org/scenarios/5/
+#
+# for an example scenario
+#
+
+PREFIX myself:      <https://pod.institution.org/reseacher/alice>
+PREFIX as:          <https://www.w3.org/ns/activitystreams#>
+PREFIX coar-notify: <http://purl.org/coar/notify_vocabulary/>
+PREFIX sorg:        <https://schema.org/>
+PREFIX rdf:         <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol:         <https://www.example.org/ns/policy#>
+PREFIX fno:         <https://w3id.org/function/ontology#>
+
+# Respond to an offer (add to a todo list)
+{
+  # It is an AS2 Offer of a ReviewRequest type
+  ?this a as:Offer .
+  ?this a coar-notify:ReviewRequest .
+
+  # The target is myself
+  ?this as:target myself: .
+}
+=>
+{
+  ?this pol:policy [
+      a fno:Execution ;
+      fno:executes pol:copyFolder ;
+      pol:folder    "my/todolist/offers"
+  ] .
+}.
+
+# Response to a reject offer response from myself
+{
+  # It is an AS2 Reject by myself to an offer
+  ?this a as:Reject .
+  ?this as:inReplyTo ?notification.
+  ?notification a as:Offer .
+  ?notification a coar-notify:ReviewRequest .
+
+  # The origin is myself
+  ?this as:origin myself: .
+}
+=>
+{
+  # Forward the Rejection to the Service Hub
+  ?this pol:policy [
+      a fno:Execution ;
+      fno:execute pol:sendNotification ;
+      pol:type     pol:RejectOffer ;
+      as:inReplyTo ?notification
+  ]
+}.
+
+# Response to an accept offer response from myself
+{
+  # It is an AS2 Reject by myself to an offer
+  ?this a as:Accept .
+  ?this as:inReplyTo ?notification .
+  ?notification a as:Offer .
+  ?notification a coar-notify:ReviewRequest .
+
+  # The origin is myself
+  ?this as:origin myself: .
+}
+=>
+{
+  # Forward the Rejection to the Service Hub
+  ?this pol:policy [
+      a fno:Execution ;
+      fno:execute pol:sendActivity ;
+      pol:type     pol:AcceptOffer ;
+      as:inReplyTo ?notification
+  ]
+}.

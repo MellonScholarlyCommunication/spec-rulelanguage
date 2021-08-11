@@ -1,0 +1,38 @@
+# Maintainer Offers an artefact in the Data Pod to a Service Hub
+#
+# See:
+#   https://mellonscholarlycommunication.github.io/coar-usecases/mellon-scenario.html#maintainer-offers-an-artefact-in-the-data-pod-to-a-service-hub
+#
+
+PREFIX myself:        <https://pod.institution.org/reseacher/alice>
+PREFIX as:            <https://www.w3.org/ns/activitystreams#>
+PREFIX rdf:           <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol:           <https://www.example.org/ns/policy#>
+PREFIX fno:           <https://w3id.org/function/ontology#>
+
+# Notify a registration service about a new publication
+{
+  # An AS2 Offer was received...
+  ?this a as:Offer .
+
+  # ...from myself
+  ?this as:actor  myself: .
+
+  # ...to a service
+  ?this!as:target a as:Service
+}
+=>
+{
+  # Send a notification to a registration hub
+  ?this pol:policy [
+      a fno:Execution ;
+      fno:execute  pol:sendActivity ;
+      pol:type     pol:OfferScholarlyWork
+  ] .
+
+  # Append to the Artefact EventLog
+  ?this pol:policy [
+      a fno:Execution ;
+      fno:executes pol:appendToLog
+  ] .
+}.

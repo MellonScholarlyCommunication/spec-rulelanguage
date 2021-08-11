@@ -1,0 +1,47 @@
+# Maintainer Announces a (finished) artefact in the Data Pod
+#
+# See:
+#   https://mellonscholarlycommunication.github.io/coar-usecases/mellon-scenario.html#maintainer-announces-a-finished-artefact-in-the-data-pod
+#
+
+PREFIX myself:        <https://pod.institution.org/reseacher/alice>
+PREFIX registration:  <https://repository.institution.org/inbox>
+PREFIX as:            <https://www.w3.org/ns/activitystreams#>
+PREFIX rdf:           <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX list:          <http://www.w3.org/2000/10/swap/list#>
+PREFIX pol:           <https://www.example.org/ns/policy#>
+PREFIX fno:           <https://w3id.org/function/ontology#>
+
+# Notify a registration service about a new publication
+{
+  # An AS2 Announce was received...
+  ?this a as:Announce .
+
+  # ...from myself
+  ?this as:actor myself: .
+
+  # ...about a new publication
+  ?this!as:object a ?type.
+  ?type list:in (as:Article as:Document as:Page).
+}
+=>
+{
+  # Send a notification to a registration hub
+  ?this pol:policy [
+      a fno:Execution ;
+      fno:execute  pol:sendActivity ;
+      pol:type     pol:AnnounceScholarlyWork  ;
+      # This could maybe be used as a default value for the as:target
+      # when no target is provided by the notification
+      as:target    registration:
+  ] .
+
+  # Append to the Artefact EventLog
+  ?this pol:policy [
+      a fno:Execution ;
+      fno:executes pol:appendToLog ;
+      # This could maybe be used as a default value for the as:target
+      # when no target is provided by the notification
+      as:target    registration:
+  ] .
+}.

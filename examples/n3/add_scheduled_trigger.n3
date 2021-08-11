@@ -1,0 +1,32 @@
+# Add State Trigger definitions
+
+PREFIX ex:   <http://example.org/>
+PREFIX as:   <https://www.w3.org/ns/activitystreams#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol:  <https://www.example.org/ns/policy#>
+PREFIX fno:  <https://w3id.org/function/ontology#>
+
+{
+    ?s a pol:DateTimeTrigger .
+    ?s a as:Announce .
+    ?s as:name "Weekend" .
+}
+=>
+{
+    ?s pol:policy [
+      a fno:Execution ;
+      fno:executes ex:sendActivity ;
+      ex:body [
+        a as:Activity ;
+        as:actor [
+          a as:Person ;
+          as:name "Sally";
+        ] ;
+        as:object [
+          a as:Note ;
+          as:name "Let's go to the pub"
+        ] ;
+        as:to <http://pod.me/my#friends>
+      ]
+    ] .
+}.

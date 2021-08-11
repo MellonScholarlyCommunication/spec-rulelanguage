@@ -1,0 +1,19 @@
+PREFIX as: <https://www.w3.org/ns/activitystreams#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ldp: <http://www.w3.org/ns/ldp#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX pol: <https://www.example.org/ns/policy#>
+PREFIX ex: <http://example.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fno: <https://w3id.org/function/ontology#>
+PREFIX list: <http://www.w3.org/2000/10/swap/list#>
+
+_:bn_1 pol:policy _:sk_0.
+_:sk_0 a fno:Execution.
+_:sk_0 fno:executes ex:appendToLog.
+_:bn_1 pol:policy _:sk_1.
+_:sk_1 a fno:Execution.
+_:sk_1 fno:executes ex:removeBlindCopies.
+PREFIX skolem: <http://josd.github.io/.well-known/genid/z8QwHBUlixD7d6RwNVMqvgyhP98#>
+
+

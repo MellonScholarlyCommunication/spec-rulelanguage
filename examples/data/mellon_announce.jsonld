@@ -1,0 +1,19 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "urn:uuid:eeed5b80-d9e5-4340-8178-c4dbe68ca040",
+  "actor": {
+    "id": "https://pod.institution.org/reseacher/alice",
+    "inbox": "https://pod.institution.org/reseacher/alice/inbox/",
+    "type": "Person"
+  },
+  "object": {
+    "id": "https://pod.institute.org/papers/201210811/n3rules/",
+    "type": "Article"
+  },
+  "target": {
+    "id": "https://registration.institute.org/",
+    "inbox": "https://registration.institute.org/inbox/",
+    "type": "Service"
+  },
+  "type": "Announce"
+}
