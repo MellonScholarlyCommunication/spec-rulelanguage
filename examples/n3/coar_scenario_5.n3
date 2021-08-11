@@ -1,3 +1,5 @@
+# Coar Scenario 5
+#
 # Accept and Reject requests
 #
 # See:
@@ -5,50 +7,46 @@
 #
 # for an example scenario
 #
-rulebook "Coar Scenario 5"
 
-myself:      <https://pod.institution.org/reseacher/alice>
-as:          <https://www.w3.org/ns/activitystreams#>
-coar-notify: <http://purl.org/coar/notify_vocabulary/>
-sorg:        <https://schema.org/>
-rdf:         <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-pol:         <https://www.example.org/ns/policy#>
-fno:         <https://w3id.org/function/ontology#>
+PREFIX myself:      <https://pod.institution.org/reseacher/alice>
+PREFIX as:          <https://www.w3.org/ns/activitystreams#>
+PREFIX coar-notify: <http://purl.org/coar/notify_vocabulary/>
+PREFIX sorg:        <https://schema.org/>
+PREFIX rdf:         <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol:         <https://www.example.org/ns/policy#>
+PREFIX fno:         <https://w3id.org/function/ontology#>
 
-rule "Respond to an offer (add to a todo list)"
-
-when
-
+# Respond to an offer (add to a todo list)
+{
   # It is an AS2 Offer of a ReviewRequest type
   ?this a as:Offer .
   ?this a coar-notify:ReviewRequest .
 
   # The target is myself
   ?this as:target myself: .
-
-then
-
-  ?s pol:policy [
+}
+=>
+{
+  ?this pol:policy [
       a fno:Execution ;
       fno:executes pol:copyFolder ;
       pol:folder    "my/todolist/offers"
   ] .
+}.
 
-rule "Response to a reject offer response from myself"
-
-when
-
+# Response to a reject offer response from myself
+{
   # It is an AS2 Reject by myself to an offer
   ?this a as:Reject .
-  ?this as:inReplyTo ?notification .
+  ?this as:inReplyTo ?notification.
   ?notification a as:Offer .
   ?notification a coar-notify:ReviewRequest .
 
   # The origin is myself
   ?this as:origin myself: .
-
-then
-
+}
+=>
+{
   # Forward the Rejection to the Service Hub
   ?this pol:policy [
       a fno:Execution ;
@@ -56,11 +54,10 @@ then
       pol:type     pol:RejectOffer ;
       as:inReplyTo ?notification
   ]
+}.
 
-rule "Response to an accept offer response from myself"
-
-when
-
+# Response to an accept offer response from myself
+{
   # It is an AS2 Reject by myself to an offer
   ?this a as:Accept .
   ?this as:inReplyTo ?notification .
@@ -69,9 +66,9 @@ when
 
   # The origin is myself
   ?this as:origin myself: .
-
-then
-
+}
+=>
+{
   # Forward the Rejection to the Service Hub
   ?this pol:policy [
       a fno:Execution ;
@@ -79,3 +76,4 @@ then
       pol:type     pol:AcceptOffer ;
       as:inReplyTo ?notification
   ]
+}.

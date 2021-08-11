@@ -1,0 +1,19 @@
+PREFIX as: <https://www.w3.org/ns/activitystreams#>
+PREFIX coar-notify: <http://purl.org/coar/notify_vocabulary/>
+PREFIX sorg: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ldp: <http://www.w3.org/ns/ldp#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX ietf: <http://www.iana.org/assignments/relation/>
+PREFIX myself: <https://pod.institution.org/reseacher/alice>
+PREFIX ns1: <https://schema.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol: <https://www.example.org/ns/policy#>
+PREFIX fno: <https://w3id.org/function/ontology#>
+
+<urn:uuid:4fb3af44-d4f8-4226-9475-2d09c2d8d9e0> pol:policy _:sk_0.
+_:sk_0 a fno:Execution.
+_:sk_0 fno:execute pol:sendNotification.
+_:sk_0 pol:type pol:RejectOffer.
+_:sk_0 as:inReplyTo <urn:uuid:0370c0fb-bb78-4a9b-87f5-bed307a509dd>.
+

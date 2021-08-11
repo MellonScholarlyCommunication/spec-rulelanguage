@@ -1,0 +1,48 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    "http://purl.org/coar/notify"
+  ],
+  "id": "urn:uuid:0370c0fb-bb78-4a9b-87f5-bed307a509dd",
+  "actor": {
+    "id": "https://orcid.org/0000-0002-1825-0097",
+    "inbox": "https://josiahcarberry.com/ldn/inbox",
+    "name": "Josiah Carberry",
+    "type": [
+      "Person"
+    ]
+  },
+  "object": {
+    "id": "https://repository.org/preprint/201203/421/",
+    "ietf:cite-as": "https://doi.org/10.5555/12345680",
+    "type": [
+      "sorg:AboutPage"
+    ],
+    "url": {
+      "id": "https://repository.org/preprint/201203/421/content.pdf",
+      "media-type": "application/pdf",
+      "type": [
+        "Article",
+        "sorg:ScholarlyArticle"
+      ]
+    }
+  },
+  "origin": {
+    "id": "https://repository.org",
+    "inbox": "https://repository.org/inbox/",
+    "type": [
+      "Service"
+    ]
+  },
+  "target": {
+    "id": "https://pod.institution.org/reseacher/alice",
+    "inbox": "https://pod.institution.org/reseacher/alice/inbox/",
+    "type": [
+      "Person"
+    ]
+  },
+  "type": [
+    "Offer",
+    "coar-notify:ReviewRequest"
+  ]
+}

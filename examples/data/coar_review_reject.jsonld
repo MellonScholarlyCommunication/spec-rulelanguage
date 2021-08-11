@@ -1,0 +1,35 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    "http://purl.org/coar/notify"
+  ],
+  "id": "urn:uuid:950d318d-dadc-4e66-bd11-774c7bb96885",
+  "inReplyTo": {
+    "id": "urn:uuid:0370c0fb-bb78-4a9b-87f5-bed307a509dd",
+    "object": {
+      "id": "https://repository.org/preprint/201203/421/",
+      "ietf:cite-as": "https://doi.org/10.5555/12345680"
+    },
+    "type": [
+      "Offer",
+      "coar-notify:ReviewRequest"
+    ]
+  },
+  "origin": {
+    "id": "https://pod.institution.org/reseacher/alice",
+    "inbox": "https://pod.institution.org/reseacher/alice/inbox/",
+    "type": [
+      "Person"
+    ]
+  },
+  "target": {
+    "id": "https://repository.org",
+    "inbox": "https://repository.org/inbox/",
+    "type": [
+      "Service"
+    ]
+  },
+  "type": [
+    "Reject"
+  ]
+}

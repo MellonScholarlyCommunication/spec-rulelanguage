@@ -1,0 +1,18 @@
+PREFIX as: <https://www.w3.org/ns/activitystreams#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ldp: <http://www.w3.org/ns/ldp#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX pol: <https://www.example.org/ns/policy#>
+PREFIX ex: <http://example.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fno: <https://w3id.org/function/ontology#>
+
+_:bn_1 pol:policy _:sk_0.
+_:sk_0 a fno:Execution.
+_:sk_0 fno:executes ex:sendEmail.
+_:sk_0 ex:from "my@myself.and.i".
+_:sk_0 ex:to "you@yourself.edu".
+_:sk_0 ex:subject "A new resource was created!".
+PREFIX skolem: <http://josd.github.io/.well-known/genid/r1fqujcUrl189uI7:61PrTwL308#>
+
+

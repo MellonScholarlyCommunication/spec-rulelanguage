@@ -1,0 +1,24 @@
+PREFIX as: <https://www.w3.org/ns/activitystreams#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ldp: <http://www.w3.org/ns/ldp#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX pol: <https://www.example.org/ns/policy#>
+PREFIX ex: <http://example.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX fno: <https://w3id.org/function/ontology#>
+
+_:bn_1 pol:policy _:sk_0.
+_:sk_0 a fno:Execution.
+_:sk_0 fno:executes ex:sendActivity.
+_:sk_0 ex:body _:sk_1.
+_:sk_1 a as:Activity.
+_:sk_1 as:actor _:sk_2.
+_:sk_2 a as:Person.
+_:sk_2 as:name "Sally".
+_:sk_1 as:object _:sk_3.
+_:sk_3 a as:Note.
+_:sk_3 as:name "Let's go to the pub".
+_:sk_1 as:to <http://pod.me/my#friends>.
+PREFIX skolem: <http://josd.github.io/.well-known/genid/i4ajYA6gxnIAen9HRLhozY5Tw6s#>
+
+

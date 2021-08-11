@@ -1,0 +1,37 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    "http://purl.org/coar/notify"
+  ],
+  "id": "urn:uuid:94ecae35-dcfd-4182-8550-22c7164fe23f",
+  "object": {
+    "coar-notify:endorses": {
+      "id": "https://repository.org/preprint/201203/421/",
+      "ietf:cite-as": "https://doi.org/10.5555/12345680"
+    },
+    "id": "https://overlay-journal.org/articles/00001/",
+    "ietf:cite-as": "https://overlay-journal.org/articles/00001/",
+    "type": [
+      "Page",
+      "sorg:WebPage"
+    ]
+  },
+  "origin": {
+    "id": "https://overlay-journal.org",
+    "inbox": "https://overlay-journal.org/requests/inbox/",
+    "type": [
+      "Service"
+    ]
+  },
+  "target": {
+    "id": "https://pod.institution.org/reseacher/alice",
+    "inbox": "https://pod.institution.org/reseacher/alice/inbox/",
+    "type": [
+      "Service"
+    ]
+  },
+  "type": [
+    "Announce",
+    "coar-notify:EndorsementSuccess"
+  ]
+}

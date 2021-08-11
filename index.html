@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
   <link href="https://mellonscholarlycommunication.github.io/spec-rulelanguage" rel="canonical">
-  <meta content="8638bb892cb849571c68c70d602cb02cf2c6f65d" name="document-revision">
+  <meta content="b50b646d916b13f69d3fbc16486875d749cd8f97" name="document-revision">
 <style>
 table {
   margin: 25px auto;
@@ -1402,7 +1402,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Rule language for decentralized business processes</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Living Standard, <time class="dt-updated" datetime="2021-06-23">23 June 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Living Standard, <time class="dt-updated" datetime="2021-08-11">11 August 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1419,7 +1419,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 23 June 2021,
+In addition, as of 11 August 2021,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1858,17 +1858,17 @@ trigger events to the rulebook engine. </div>
 In the example below we assume that cron based process is capable to generate
 an AS2 notification at a specific time. We assume that every Friday at 17:00
 CEST the <code>Weekend</code> trigger is activated.</p>
-   <div class="example" id="example-876d8606">
-    <a class="self-link" href="#example-876d8606"></a> 
+   <div class="example" id="example-8693faed">
+    <a class="self-link" href="#example-8693faed"></a> 
 <pre class="language-(JSON)">{
   "@context": [
       "https://www.w3.org/ns/activitystreams",
       "https://www.example.org/ns/policy"
   ] ,
   "summary": "Time Trigger",
-  "name": "Weekend"
+  "name": "Weekend",
   "type": [ "Announce" , "pol:DateTimeTrigger" ],
-  "startTime": "2021-07-09T17:00:00-01:00" ,
+  "startTime": "2021-07-09T17:00:00-01:00"
 }
 </pre>
    </div>

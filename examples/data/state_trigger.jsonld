@@ -1,0 +1,12 @@
+{
+  "@context": [
+      "https://www.w3.org/ns/activitystreams",
+      {
+        "pol": "https://www.example.org/ns/policy#"
+      }
+  ] ,
+  "type": [ "Create" , "pol:StateTrigger" ] ,
+  "actor": "http://my.instutution.org/people/124" ,
+  "object": "http://my.instutution.org/people/124/publications/a03218h" ,
+  "summary": "A new publication was created by person 1234"
+}

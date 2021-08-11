@@ -1,0 +1,12 @@
+{
+  "@context": [
+      "https://www.w3.org/ns/activitystreams",
+      {
+        "pol": "https://www.example.org/ns/policy#"
+      }
+  ] ,
+  "summary": "Time Trigger",
+  "name": "Weekend" ,
+  "type": [ "Announce" , "pol:DateTimeTrigger" ],
+  "startTime": "2021-07-09T17:00:00-01:00"
+}

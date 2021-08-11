@@ -1,0 +1,18 @@
+PREFIX as: <https://www.w3.org/ns/activitystreams#>
+PREFIX coar-notify: <http://purl.org/coar/notify_vocabulary/>
+PREFIX sorg: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ldp: <http://www.w3.org/ns/ldp#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX ietf: <http://www.iana.org/assignments/relation/>
+PREFIX myself: <https://pod.institution.org/reseacher/alice>
+PREFIX ns1: <https://schema.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol: <https://www.example.org/ns/policy#>
+PREFIX fno: <https://w3id.org/function/ontology#>
+
+<urn:uuid:94ecae35-dcfd-4182-8550-22c7164fe23f> pol:policy _:sk_0.
+_:sk_0 a fno:Execution.
+_:sk_0 fno:executes pol:addLink.
+_:sk_0 pol:linkType pol:ReviewLink.
+

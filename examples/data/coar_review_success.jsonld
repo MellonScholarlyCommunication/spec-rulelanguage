@@ -1,0 +1,45 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    "http://purl.org/coar/notify"
+  ],
+  "id": "urn:uuid:1cc28503-c50b-4a4c-bd2a-825ff429522",
+  "actor": {
+    "id": "https://isni.org/isni/0000000122832703",
+    "inbox": "https://hgwells.com/ldn/inbox",
+    "name": "H G Wells",
+    "type": [
+      "Person"
+    ]
+  },
+  "object": {
+    "coar-notify:reviews": {
+      "id": "https://repository.org/preprint/201203/421/",
+      "ietf:cite-as": "https://doi.org/10.5555/12345680"
+    },
+    "id": "https://reviewservice.org/review/geo/202103/0021",
+    "ietf:cite-as": "https://doi.org/10.3214/987654",
+    "type": [
+      "Document",
+      "sorg:Review"
+    ]
+  },
+  "origin": {
+    "id": "https://reviewservice.org",
+    "inbox": "https://reviewservice.org/requests/inbox/",
+    "type": [
+      "Service"
+    ]
+  },
+  "target": {
+    "id": "https://pod.institution.org/reseacher/alice",
+    "inbox": "https://pod.institution.org/reseacher/alice/inbox/",
+    "type": [
+      "Person"
+    ]
+  },
+  "type": [
+    "Announce",
+    "coar-notify:ReviewSuccess"
+  ]
+}
