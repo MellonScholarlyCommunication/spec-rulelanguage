@@ -21,8 +21,7 @@ when
   ?this as:actor  myself: .
 
   # ...to a service
-  ?this as:target ?target .
-  ?target a as:Service.
+  ?this!as:target a as:Service.
 
 then
 
