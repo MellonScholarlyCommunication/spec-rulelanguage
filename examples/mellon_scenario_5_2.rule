@@ -5,7 +5,6 @@
 rulebook "Maintainer Offers an artefact in the Data Pod to a Service Hub"
 
 myself:        <https://pod.institution.org/reseacher/alice>
-registration:  <https://repository.institution.org/inbox>
 as:            <https://www.w3.org/ns/activitystreams#>
 coar-notify:   <http://purl.org/coar/notify_vocabulary/>
 sorg:          <https://schema.org/>
