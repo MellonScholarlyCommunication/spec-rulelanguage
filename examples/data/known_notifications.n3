@@ -3,4 +3,4 @@ PREFIX as:  <https://www.w3.org/ns/activitystreams#>
 PREFIX log: <http://www.w3.org/2000/10/swap/log#>
 
 { <urn:uuid:f817d720-c761-479b-967a-1b014556e9cd> a as:Offer.   } a :Event.
-{ <urn:uuid:eeed5b80-d9e5-4340-8178-c4dbe68ca040> a as:Annouce. } a :Event.
+{ <urn:uuid:eeed5b80-d9e5-4340-8178-c4dbe68ca040> a as:Announce. } a :Event.

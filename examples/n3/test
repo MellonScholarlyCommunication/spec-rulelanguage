@@ -1,58 +1,70 @@
 #!/bin/bash
-
+#
+# Requires EYE v21.0811.1752 or better
+#
 DATA_DIR=examples/data
 N3_DIR=examples/n3
 
-#eye <(bin/convert_rdf ${DATA_DIR}/scheduled_trigger.jsonld)  \
-#    ${N3_DIR}/add_scheduled_trigger.n3 \
-#    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/add_scheduled_trigger_answer.n3
+eye <(bin/convert_rdf ${DATA_DIR}/scheduled_trigger.jsonld)  \
+    ${N3_DIR}/add_scheduled_trigger.n3 \
+    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/add_scheduled_trigger_answer.n3
 
-#eye <(bin/convert_rdf ${DATA_DIR}/state_trigger.jsonld)  \
-#    ${N3_DIR}/add_state_trigger.n3 \
-#    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/add_state_trigger_answer.n3
+eye <(bin/convert_rdf ${DATA_DIR}/state_trigger.jsonld)  \
+    ${N3_DIR}/add_state_trigger.n3 \
+    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/add_state_trigger_answer.n3
 
-#eye <(bin/convert_rdf ${DATA_DIR}/state_trigger.jsonld)  \
-#    ${N3_DIR}/add_to_eventlog.n3 \
-#    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/add_to_eventlog_answer.n3
+eye <(bin/convert_rdf ${DATA_DIR}/state_trigger.jsonld)  \
+    ${N3_DIR}/add_to_eventlog.n3 \
+    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/add_to_eventlog_answer.n3
 
-#eye <(bin/convert_rdf ${DATA_DIR}/coar_review_success.jsonld)  \
-#    ${N3_DIR}/coar_scenario_1.n3 \
-#    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/coar_scenario_1_review_success_answer.n3
+eye <(bin/convert_rdf ${DATA_DIR}/coar_review_success.jsonld)  \
+    ${N3_DIR}/coar_scenario_1.n3 \
+    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/coar_scenario_1_review_success_answer.n3
 
-#eye <(bin/convert_rdf ${DATA_DIR}/coar_endorsement_success.jsonld)  \
-#    ${N3_DIR}/coar_scenario_1.n3 \
-#    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/coar_scenario_1_endorsement_success_answer.n3
+eye <(bin/convert_rdf ${DATA_DIR}/coar_endorsement_success.jsonld)  \
+    ${N3_DIR}/coar_scenario_1.n3 \
+    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/coar_scenario_1_endorsement_success_answer.n3
 
-#eye <(bin/convert_rdf ${DATA_DIR}/coar_review_request.jsonld)  \
-#    ${N3_DIR}/coar_scenario_5.n3 \
-#    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/coar_scenario_5_review_request_answer.n3
+eye <(bin/convert_rdf ${DATA_DIR}/coar_review_request.jsonld)  \
+    ${N3_DIR}/coar_scenario_5.n3 \
+    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/coar_scenario_5_review_request_answer.n3
 
-#eye <(bin/convert_rdf ${DATA_DIR}/coar_review_reject.jsonld)  \
-#    ${N3_DIR}/coar_scenario_5.n3 \
-#    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/coar_scenario_5_review_reject_answer.n3
+eye <(bin/convert_rdf ${DATA_DIR}/coar_review_reject.jsonld)  \
+    ${N3_DIR}/coar_scenario_5.n3 \
+    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/coar_scenario_5_review_reject_answer.n3
 
-#eye <(bin/convert_rdf ${DATA_DIR}/coar_review_accept.jsonld)  \
-#    ${N3_DIR}/coar_scenario_5.n3 \
-#    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/coar_scenario_5_review_accept_answer.n3
+eye <(bin/convert_rdf ${DATA_DIR}/coar_review_accept.jsonld)  \
+    ${N3_DIR}/coar_scenario_5.n3 \
+    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/coar_scenario_5_review_accept_answer.n3
 
-#eye <(bin/convert_rdf ${DATA_DIR}/mellon_announce.jsonld)  \
-#    ${N3_DIR}/mellon_scenario_5_1.n3 \
-#    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/mellon_scenario_5_1_answer.n3
+eye <(bin/convert_rdf ${DATA_DIR}/mellon_announce.jsonld)  \
+    ${N3_DIR}/mellon_scenario_5_1.n3 \
+    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/mellon_scenario_5_1_answer.n3
 
-#eye <(bin/convert_rdf ${DATA_DIR}/mellon_announce.jsonld)  \
-#    ${N3_DIR}/mellon_scenario_5_1.n3 \
-#    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/mellon_scenario_5_1_answer.n3
+eye <(bin/convert_rdf ${DATA_DIR}/mellon_announce.jsonld)  \
+    ${N3_DIR}/mellon_scenario_5_1.n3 \
+    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/mellon_scenario_5_1_answer.n3
 
-#eye <(bin/convert_rdf ${DATA_DIR}/mellon_offer.jsonld)  \
-#    ${N3_DIR}/mellon_scenario_5_2.n3 \
-#    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/mellon_scenario_5_2_answer.n3
+eye <(bin/convert_rdf ${DATA_DIR}/mellon_offer.jsonld)  \
+    ${N3_DIR}/mellon_scenario_5_2.n3 \
+    --quiet --nope --pass-only-new 2> /dev/null > ${N3_DIR}/mellon_scenario_5_2_answer.n3
 
 eye <(bin/convert_rdf ${DATA_DIR}/mellon_announce_with_inreplyto.jsonld)  \
     ${DATA_DIR}/known_notifications.n3 \
     ${N3_DIR}/mellon_scenario_6_1.n3 \
-    --quiet --nope --pass-only-new 2> /dev/null  > ${N3_DIR}/mellon_scenario_6_1_with_inreplyto_answer.n3
+    --quiet --nope --pass-only-new 2> /dev/null  > ${N3_DIR}/mellon_scenario_6_1_announce_with_inreplyto_answer.n3
 
 eye <(bin/convert_rdf ${DATA_DIR}/mellon_announce.jsonld)  \
     ${DATA_DIR}/known_notifications.n3 \
     ${N3_DIR}/mellon_scenario_6_1.n3 \
-    --quiet --nope --pass-only-new 2> /dev/null  > ${N3_DIR}/mellon_scenario_6_1_answer.n3
+    --quiet --nope --pass-only-new 2> /dev/null  > ${N3_DIR}/mellon_scenario_6_1_announce_answer.n3
+
+eye <(bin/convert_rdf ${DATA_DIR}/mellon_accept.jsonld)  \
+    ${DATA_DIR}/known_notifications.n3 \
+    ${N3_DIR}/mellon_scenario_6_1.n3 \
+    --quiet --nope --pass-only-new 2> /dev/null  > ${N3_DIR}/mellon_scenario_6_1_accept_answer.n3
+
+eye <(bin/convert_rdf ${DATA_DIR}/mellon_reject.jsonld)  \
+    ${DATA_DIR}/known_notifications.n3 \
+    ${N3_DIR}/mellon_scenario_6_1.n3 \
+    --quiet --nope --pass-only-new 2> /dev/null  > ${N3_DIR}/mellon_scenario_6_1_reject_answer.n3
