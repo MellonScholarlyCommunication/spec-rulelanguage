@@ -1,4 +1,4 @@
-.PHONY: examples
+.PHONY: spec watch examples
 
 help:
 	@echo "Generate HTML from a Bikeshed source document:"
@@ -19,7 +19,6 @@ N3 = $(DATA)/coar_endorsement_success.n3	$(DATA)/coar_review_reject.n3	\
 		 $(DATA)/mellon_accept.n3						  $(DATA)/mellon_announce_with_inreplyto.n3 \
 		 $(DATA)/mellon_reject.n3             $(DATA)/mellon_announce.n3		\
 		 $(DATA)/mellon_offer.n3
-
 
 n3: $(N3)
 
