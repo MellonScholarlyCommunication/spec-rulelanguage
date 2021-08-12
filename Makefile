@@ -12,5 +12,19 @@ spec:
 watch:
 	docker run --rm -v "`pwd`:/spec" -w /spec netwerkdigitaalerfgoed/bikeshed:1.7.0 sh -c "bikeshed watch"
 
-examples:
+DATA = examples/data
+N3 = $(DATA)/coar_endorsement_success.n3	$(DATA)/coar_review_reject.n3	\
+     $(DATA)/coar_review_success.n3       $(DATA)/coar_review_accept.n3 \
+		 $(DATA)/coar_review_request.n3 \
+		 $(DATA)/mellon_accept.n3						  $(DATA)/mellon_announce_with_inreplyto.n3 \
+		 $(DATA)/mellon_reject.n3             $(DATA)/mellon_announce.n3		\
+		 $(DATA)/mellon_offer.n3
+
+
+n3: $(N3)
+
+examples: $(N3)
 	examples/n3/test
+
+examples/data/%.n3: examples/data/%.jsonld
+	bin/convert_rdf $< NT > $@
