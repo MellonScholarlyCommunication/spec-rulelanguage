@@ -1,12 +1,7 @@
+PREFIX myself: <https://pod.institution.org/reseacher/alice>
 PREFIX as: <https://www.w3.org/ns/activitystreams#>
 PREFIX coar-notify: <http://purl.org/coar/notify_vocabulary/>
-PREFIX sorg: <http://schema.org/>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX ldp: <http://www.w3.org/ns/ldp#>
-PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
-PREFIX ietf: <http://www.iana.org/assignments/relation/>
-PREFIX myself: <https://pod.institution.org/reseacher/alice>
-PREFIX ns1: <https://schema.org/>
+PREFIX sorg: <https://schema.org/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX pol: <https://www.example.org/ns/policy#>
 PREFIX fno: <https://w3id.org/function/ontology#>
