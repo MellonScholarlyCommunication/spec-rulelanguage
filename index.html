@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
   <link href="https://mellonscholarlycommunication.github.io/spec-rulelanguage" rel="canonical">
-  <meta content="eea3ed17839125d6cbc8830a6a3114ee38f91006" name="document-revision">
+  <meta content="6165a67e0a085aba517c7b83459345b396bd520a" name="document-revision">
 <style>
 table {
   margin: 25px auto;
@@ -1458,6 +1458,7 @@ Parts of this work may be from another specification document.  If so, those par
      <a href="#implementation-hints"><span class="secno">5</span> <span class="content">Implementation Hints</span></a>
      <ol class="toc">
       <li><a href="#sparql"><span class="secno">5.1</span> <span class="content">SPARQL</span></a>
+      <li><a href="#notation3"><span class="secno">5.2</span> <span class="content">Notation3</span></a>
      </ol>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
@@ -1579,12 +1580,12 @@ to the <a href="/spec-overview/#EventLog">EventLog</a> and removes the <code>bcc
    <p>Conditions in the <strong>when</strong> clause are interpreted as boolean statements. When the
 condition is in the format of a triple, it means the <em>existence</em> of the triple in the
 input data. This behavior matches SPARQL <em>WHERE</em> clause statements:</p>
-   <div class="example" id="example-9ebace67">
-    <a class="self-link" href="#example-9ebace67"></a> 
+   <div class="example" id="example-bc237712">
+    <a class="self-link" href="#example-bc237712"></a> 
 <pre><b>when</b>
     ?s foaf:name "Herbert"  .      # a property <code>foad:name</code> equals "Herbert" shoud exist
     ?s ?p  42  .                   # a property with value 42 should exist
-    ?s as:object/nrr:reviews ?o  . # a nested as:object/nrr:reviews should exist
+    ?s/as:object nrr:reviews ?o  . # a nested ?s/as:object/nrr:reviews should exist
 </pre>
    </div>
    <p>Functions in our pseudolanguage mimic the SPARQL <em>FILTER</em> statements:</p>
@@ -1937,8 +1938,8 @@ WHERE {
 </pre>
    </div>
    <p>Example 5 - Conditions</p>
-   <div class="example" id="example-0cb302c1">
-    <a class="self-link" href="#example-0cb302c1"></a> 
+   <div class="example" id="example-d6f0d882">
+    <a class="self-link" href="#example-d6f0d882"></a> 
 <pre>PREFIX ex: &lt;http://example.org/>
 PREFIX as: &lt;https://www.w3.org/ns/activitystreams#>
 PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -1950,7 +1951,7 @@ CONSTRUCT {
 WHERE {
   ?this foaf:name "Herbert"  .
   ?this ?p  42  .
-  ?this as:object/nrr:reviews ?o .
+  ?this/as:object nrr:reviews ?o .
 }
 </pre>
    </div>
@@ -1976,6 +1977,81 @@ WHERE {
 }
 </pre>
    </div>
+   <h3 class="heading settled" data-level="5.2" id="notation3"><span class="secno">5.2. </span><span class="content">Notation3</span><a class="self-link" href="#notation3"></a></h3>
+   <p>Example 2 - Add to the EventLog</p>
+   <div class="example" id="example-79212ae8">
+    <a class="self-link" href="#example-79212ae8"></a> 
+<pre>PREFIX ex: &lt;http://example.org/>
+PREFIX as: &lt;https://www.w3.org/ns/activitystreams#>
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol: &lt;https://www.example.org/ns/policy#>
+PREFIX fno: &lt;https://w3id.org/function/ontology#>
+PREFIX list: &lt;http://www.w3.org/2000/10/swap/list#>
+
+{
+  ?s a ?class .
+  ?class list:in (as:Announce as:Create) .
+}
+=>
+{
+  ?s pol:policy [
+      a fno:Execution ;
+      fno:executes ex:appendToLog
+  ] .
+  ?s pol:policy [
+      a fno:Execution ;
+      fno:executes ex:removeBlindCopies
+  ] .
+} .
+</pre>
+   </div>
+   <p>Example 5 - Conditions</p>
+   <div class="example" id="example-ff884ea9">
+    <a class="self-link" href="#example-ff884ea9"></a> 
+<pre>PREFIX ex: &lt;http://example.org/>
+PREFIX as: &lt;https://www.w3.org/ns/activitystreams#>
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol: &lt;https://www.example.org/ns/policy#>
+PREFIX fno: &lt;https://w3id.org/function/ontology#>
+
+{
+  ?this foaf:name "Herbert"  .
+  ?this ?p  42  .
+  ?this!as:object nrr:reviews ?o .
+}
+=> {
+  ...
+} .
+</pre>
+   </div>
+   <p>Example 7 - Function Examples</p>
+   <div class="example" id="example-967d4ac6">
+    <a class="self-link" href="#example-967d4ac6"></a> 
+<pre>PREFIX ex: &lt;http://example.org/>
+PREFIX as: &lt;https://www.w3.org/ns/activitystreams#>
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pol: &lt;https://www.example.org/ns/policy#>
+PREFIX fno: &lt;https://w3id.org/function/ontology#>
+PREFIX list: &lt;http://www.w3.org/2000/10/swap/list#>
+PREFIX string: &lt;http://www.w3.org/2000/10/swap/string#>
+PREFIX math: &lt; http://www.w3.org/2000/10/swap/math#>
+
+{
+   ?this a ?class .
+   ?class list:in (as:Announce  as:Accept) .
+
+   ?this foo:name ?foo_val .
+   ?foo_val string:matches "yahoo" .
+
+   ( 1 2 3 4 5) math:product ?product .
+}
+=>
+{
+   ...
+} .
+</pre>
+   </div>
+   <p>More Notation3 examples are available at <a href="https://github.com/MellonScholarlyCommunication/spec-rulelanguage/tree/master/examples/n3">https://github.com/MellonScholarlyCommunication/spec-rulelanguage/tree/master/examples/n3</a>.</p>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
