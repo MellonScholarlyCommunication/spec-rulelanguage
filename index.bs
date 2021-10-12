@@ -2,7 +2,7 @@
 Title: Rule language for decentralized business processes
 Shortname: rulelanguage
 Level: 1
-Status: LD
+Status: iso/WD 
 URL: https://mellonscholarlycommunication.github.io/spec-rulelanguage
 Editor: Patrick Hochstenbach, Ghent University, patrick.hochstenbach@ugent.be
 Editor: Miel Vander Sande, meemoo - [Flemish Institute for Archiving](https://meemoo.be), miel.vandersande@meemoo.be
